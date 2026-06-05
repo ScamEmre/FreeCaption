@@ -9,6 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.md)
 [![Premiere Pro](https://img.shields.io/badge/Premiere%20Pro-23%E2%80%9327-9999ff)](#kurulum)
 [![GPU](https://img.shields.io/badge/CUDA-NVIDIA%20RTX-76b900)](#sistem-gereksinimleri)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-555555)](#kurulum)
 [![Windows VDS](https://img.shields.io/badge/VDS-Windows%20Ready-06b6d4)](#-uzak-sunucu-vds-kurulumu--opsiyonel)
 [![Made in Türkiye](https://img.shields.io/badge/Made%20in-T%C3%BCrkiye-e30a17)](#)
 
@@ -55,8 +56,8 @@ Türk video editörlerin yıllardır beklediği şey: **Premiere Pro'da Türkçe
 
 ### Sistem Gereksinimleri
 
-- **Windows 10/11**
-- **Adobe Premiere Pro 23.0+** (2023, 2024, 2025, 2026, 2027 betası)
+- **Windows 10/11** (yerel sunucu) **veya macOS** (panel istemcisi — uzak VDS sunucusuna bağlanır)
+- **Adobe Premiere Pro 23.0+** (2023, 2024, 2025, 2026, 2027 betası) — Windows & macOS
 - **Python 3.10-3.12** (kurulum sırasında otomatik kontrol edilir)
 - **FFmpeg** (kurulum sırasında otomatik yüklenir)
 - **NVIDIA GPU (opsiyonel ama önerilen)** — RTX 20/30/40/50 serisi
@@ -83,9 +84,11 @@ veya **Code → Download ZIP** olarak indir ve istediğin yere çıkar.
 
 ### Adım 3 — CEP Plugin'i Premiere'e Bağla
 
-`cep_kur.bat` dosyasına çift tıkla. Sihirbaz:
+**Windows:** `cep_kur.bat` dosyasına çift tıkla. Sihirbaz:
 1. CEP debug modunu Windows registry'e yazar
 2. Plugin'i `%APPDATA%\Adobe\CEP\extensions\FreeCaption` klasörüne kopyalar
+
+**macOS:** Terminal'de `chmod +x cep_kur.sh && ./cep_kur.sh` çalıştır — CEP debug modunu açar, plugin'i `~/Library/Application Support/Adobe/CEP/extensions/FreeCaption` klasörüne kopyalar ve gerekirse FFmpeg'i Homebrew ile kurar.
 
 Premiere'i yeniden başlat. **Window → Extensions → FreeCaption** menüsünden paneli aç.
 
@@ -96,6 +99,8 @@ Premiere'i yeniden başlat. **Window → Extensions → FreeCaption** menüsünd
 Bilgisayar her açıldığında otomatik başlasın istersen: `autostart_kur.bat` çalıştır.
 
 > **Veya:** Panel üzerindeki **▶ Sunucu Başlat** butonu da aynı işi yapar.
+
+> **🍎 macOS notu:** Yerel Python sunucusu şu an yalnız **Windows/Linux**'ta çalışır. macOS'ta paneli kurduktan sonra **Uzak Sunucu (VDS)** moduyla bir Windows/Linux sunucusuna bağlanın (aşağıdaki [VDS Kurulumu](#-uzak-sunucu-vds-kurulumu--opsiyonel)).
 
 ---
 
@@ -246,6 +251,12 @@ A: Whisper 99 dil destekli — UI'da TR/EN seçeneği var ama API'ye `language` 
 
 Adobe için ücretli/kapalı kaynak çözümlerin (Kaps, Subs) Türk video editörlerine pahalıya gelmesi üzerine **açık kaynak, yerel ve sınırsız** alternatif geliştirme amacıyla başladı.
 
+### Katkıda Bulunanlar
+
+Projeyi daha iyi hale getiren herkese teşekkürler 🙏
+
+- **[@CeroWalker](https://github.com/CeroWalker)** — Projeyi forklayıp **macOS desteği**, UTF-8 encoding düzeltmesi (CEP ↔ ExtendScript, Türkçe karakter sorunu), FFmpeg otomatik kurulum (winget / Homebrew) ve Linux VDS script iyileştirmelerini ekledi. ([v1.1.0](https://github.com/ScamEmre/FreeCaption/releases/tag/v1.1.0))
+
 ---
 
 ## Katkıda Bulun
@@ -256,8 +267,9 @@ Detaylı rehber: [CONTRIBUTING.md](CONTRIBUTING.md) · Değişiklik geçmişi: [
 
 ### Roadmap
 
+- [x] **macOS Premiere desteği** (CEP panel + VDS modu) — [@CeroWalker](https://github.com/CeroWalker) katkısı 🎉
 - [ ] AMD GPU (ROCm) desteği
-- [ ] macOS native binary
+- [ ] macOS yerel sunucu (native binary)
 - [ ] Otomatik altyazı stilleri (font, renk, konum) — Premiere caption preset
 - [ ] Çoklu konuşmacı ayrımı (diarization, WhisperX `--diarize`)
 - [ ] Konfigürasyon paneli (özel modeller, custom prompts)
