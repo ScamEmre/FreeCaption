@@ -56,17 +56,20 @@ REM ---- 3) GPU tespiti + PyTorch (kesintide bir kez yeniden dener) ----
 echo [3/6] GPU tespiti ve PyTorch kurulumu...
 set "HASGPU=0"
 where nvidia-smi >nul 2>nul && set "HASGPU=1"
+REM Surum SABITLENMEZ: pip, kullanilan Python icin mevcut en uygun
+REM cu128/cpu torch'u secsin (index eski surumleri zamanla kaldiriyor).
 if "%HASGPU%"=="1" (
     echo       NVIDIA GPU bulundu  -^>  CUDA 12.8 PyTorch
-    "%VPIP%" install torch==2.7.1 torchaudio==2.7.1 --index-url https://download.pytorch.org/whl/cu128 || "%VPIP%" install torch==2.7.1 torchaudio==2.7.1 --index-url https://download.pytorch.org/whl/cu128
+    "%VPIP%" install torch torchaudio --index-url https://download.pytorch.org/whl/cu128 || "%VPIP%" install torch torchaudio --index-url https://download.pytorch.org/whl/cu128
 ) else (
     echo       GPU yok  -^>  CPU PyTorch
-    "%VPIP%" install torch==2.7.1+cpu torchaudio==2.7.1+cpu --index-url https://download.pytorch.org/whl/cpu || "%VPIP%" install torch==2.7.1+cpu torchaudio==2.7.1+cpu --index-url https://download.pytorch.org/whl/cpu
+    "%VPIP%" install torch torchaudio --index-url https://download.pytorch.org/whl/cpu || "%VPIP%" install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
 )
 if errorlevel 1 (
     echo.
-    echo  HATA: PyTorch kurulamadi (muhtemelen internet kesildi).
-    echo  install.bat'i tekrar calistir; pip yarim kalan indirmeyi kaldigi yerden surdurur.
+    echo  HATA: PyTorch kurulamadi (internet kesildi ya da Python surumu uyumsuz).
+    echo  install.bat'i tekrar calistir; takilirsa Python 3.12 kur (3.13+ bazi
+    echo  paketlerde wheel sorunu cikarabilir).
     echo.
     pause
     exit /b 1
