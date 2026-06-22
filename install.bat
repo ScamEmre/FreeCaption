@@ -22,13 +22,16 @@ for %%V in (3.12 3.11 3.10) do (
     )
 )
 if not defined PYEXE (
-    where python >nul 2>nul && set "PYEXE=python"
+    REM 3.10-3.12 yok. Yeni Python'larda (3.13+) whisper yiginin wheel'i
+    REM olmayabildigi icin winget ile Python 3.12 kur.
+    echo       Uygun Python 3.10-3.12 yok. Python 3.12 winget ile kuruluyor...
+    winget install -e --id Python.Python.3.12 --accept-package-agreements --accept-source-agreements
+    py -3.12 -V >nul 2>nul && set "PYEXE=py -3.12"
 )
 if not defined PYEXE (
     echo.
-    echo  HATA: Python 3.10-3.12 bulunamadi.
-    echo  Indir: https://www.python.org/downloads/
-    echo  Kurulum sirasinda "Add Python to PATH" kutusunu ISARETLE.
+    echo  HATA: Python 3.10-3.12 kurulamadi.
+    echo  Elle kur: https://www.python.org/downloads/  ("Add Python to PATH" isaretle)
     echo.
     pause
     exit /b 1
@@ -36,9 +39,17 @@ if not defined PYEXE (
 echo       OK ^(%PYEXE%^)
 echo.
 
-REM ---- 2) Sanal ortam (.venv) ----
+REM ---- 2) Sanal ortam (.venv) -- uyumsuz Python ile kurulduysa yeniden olustur ----
 echo [2/6] Sanal ortam (.venv) hazirlaniyor...
-if not exist ".venv\Scripts\python.exe" (
+set "VENV_OK=0"
+if exist ".venv\Scripts\python.exe" (
+    ".venv\Scripts\python.exe" -c "import sys; sys.exit(0 if (3,10)<=sys.version_info[:2]<=(3,12) else 1)" && set "VENV_OK=1"
+)
+if "%VENV_OK%"=="0" (
+    if exist ".venv" (
+        echo       Mevcut .venv uyumsuz Python ile kurulmus - siliniyor...
+        rmdir /s /q ".venv"
+    )
     %PYEXE% -m venv .venv
     if errorlevel 1 (
         echo  HATA: venv olusturulamadi.
@@ -56,14 +67,16 @@ REM ---- 3) GPU tespiti + PyTorch (kesintide bir kez yeniden dener) ----
 echo [3/6] GPU tespiti ve PyTorch kurulumu...
 set "HASGPU=0"
 where nvidia-smi >nul 2>nul && set "HASGPU=1"
-REM Surum SABITLENMEZ: pip, kullanilan Python icin mevcut en uygun
-REM cu128/cpu torch'u secsin (index eski surumleri zamanla kaldiriyor).
+REM Surum ARALIGI: torchaudio>=2.9 'AudioMetaData'yi kaldirdi, whisperx 3.3.1'in
+REM cektigi pyannote.audio 3.3.2 ise hala onu kullaniyor -> 2.9+ ile import cokuyor.
+REM Bu yuzden 2.7-2.8 araligi (pyannote uyumlu). Bu araligin cu128 wheel'i sadece
+REM Python 3.10-3.12'de var (3.13'te yok); o yuzden yukarida 3.12 sart kosuldu.
 if "%HASGPU%"=="1" (
     echo       NVIDIA GPU bulundu  -^>  CUDA 12.8 PyTorch
-    "%VPIP%" install torch torchaudio --index-url https://download.pytorch.org/whl/cu128 || "%VPIP%" install torch torchaudio --index-url https://download.pytorch.org/whl/cu128
+    "%VPIP%" install "torch>=2.7,<2.9" "torchaudio>=2.7,<2.9" --index-url https://download.pytorch.org/whl/cu128 || "%VPIP%" install "torch>=2.7,<2.9" "torchaudio>=2.7,<2.9" --index-url https://download.pytorch.org/whl/cu128
 ) else (
     echo       GPU yok  -^>  CPU PyTorch
-    "%VPIP%" install torch torchaudio --index-url https://download.pytorch.org/whl/cpu || "%VPIP%" install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+    "%VPIP%" install "torch>=2.7,<2.9" "torchaudio>=2.7,<2.9" --index-url https://download.pytorch.org/whl/cpu || "%VPIP%" install "torch>=2.7,<2.9" "torchaudio>=2.7,<2.9" --index-url https://download.pytorch.org/whl/cpu
 )
 if errorlevel 1 (
     echo.
@@ -79,8 +92,14 @@ echo.
 REM ---- 4) Backend bagimliliklari (kesintide bir kez yeniden dener) ----
 echo [4/6] Whisper / WhisperX / FastAPI kuruluyor (ilk seferde 5-10 dk)...
 "%VPIP%" install -r backend\requirements.txt || "%VPIP%" install -r backend\requirements.txt
-if "%HASGPU%"=="0" (
-    REM Windows CPU: ctranslate2 4.5+ DLL hatasi veriyor -> 4.4.0 stabil
+if "%HASGPU%"=="1" (
+    REM GPU: requirements ctranslate2 4.4.0'i (cuDNN 8) cekiyor, ama torch cu128
+    REM cuDNN 9 getiriyor -> "cudnn_ops_infer64_8.dll bulunamadi" cokmesi.
+    REM 4.5+ cuDNN 9 kullanir, torch'un DLL'leriyle uyumlu (RTX 50 sm_120'de dogrulandi).
+    echo       GPU modu: ctranslate2 4.5+ (cuDNN 9 - torch cu128 ile uyumlu)...
+    "%VPIP%" install "ctranslate2>=4.5,<5" --force-reinstall --no-deps
+) else (
+    REM Windows CPU: ctranslate2 4.5+ libomp DLL hatasi veriyor -> 4.4.0 stabil
     echo       CPU modu: ctranslate2 4.4.0 stabil surume sabitleniyor...
     "%VPIP%" install "ctranslate2==4.4.0" --force-reinstall --no-deps
     "%VPIP%" install intel-openmp
