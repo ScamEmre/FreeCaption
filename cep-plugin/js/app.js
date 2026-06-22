@@ -177,17 +177,50 @@
     }
   }
 
+  // start.bat yolunu coz: (1) kullanici ayari -> (2) cep_kur.bat'in yazdigi
+  // server_path.txt -> (3) bos. Bulununca localStorage'a yazip tekrar arama.
+  function resolveStartBat() {
+    try {
+      var saved = localStorage.getItem("fc_local_start_bat");
+      if (saved && saved.length > 0) return saved;
+    } catch (e) {}
+    try {
+      var fs = require("fs");
+      var path = require("path");
+      var f = path.join(getExtensionDir(), "server_path.txt");
+      if (fs.existsSync(f)) {
+        var p = (fs.readFileSync(f, "utf8") || "").trim();
+        if (p) {
+          try { localStorage.setItem("fc_local_start_bat", p); } catch (e2) {}
+          return p;
+        }
+      }
+    } catch (e) {}
+    return "";
+  }
+
   if (srvStartBtn) srvStartBtn.addEventListener("click", function () {
     if (typeof process !== "undefined" && process.platform === "darwin") {
       setServerStatus("macOS'ta yerel başlatma desteklenmiyor. Lütfen VDS sunucusuna bağlanın.", "err");
       return;
     }
     setServerStatus("Başlatılıyor…", "busy");
-    // Lokal sunucu yolu kullanıcı tarafından ayarlanabilir (⚙ Sunucu Ayarları → Lokal mod)
-    // VDS modunda bu buton kullanılmaz; URL uzak sunucuya işaret eder.
-    var batPath = localStorage.getItem("fc_local_start_bat") || "";
+    // Lokal sunucu yolu otomatik bulunur (server_path.txt); bulunamazsa kullanicidan iste.
+    // VDS modunda bu buton gereksizdir; URL uzak sunucuya işaret eder.
+    var batPath = resolveStartBat();
     if (!batPath) {
-      setServerStatus("Lokal sunucu yolu ayarlanmamış. VDS kullanılıyorsa bu buton gereksiz.", "err");
+      var entered = prompt(
+        "start.bat dosyasinin tam yolunu yapistir\n(orn. C:\\Users\\ad\\FreeCaption\\start.bat):",
+        ""
+      );
+      if (entered) {
+        entered = entered.trim().replace(/^"+|"+$/g, "");
+        try { localStorage.setItem("fc_local_start_bat", entered); } catch (e) {}
+        batPath = entered;
+      }
+    }
+    if (!batPath) {
+      setServerStatus("Sunucu yolu ayarlanmadi. install.bat + cep_kur.bat'i calistir ya da start.bat yolunu gir.", "err");
       return;
     }
     var workDir = batPath.replace(/[\\\/][^\\\/]+$/, "");

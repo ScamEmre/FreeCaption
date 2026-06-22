@@ -57,6 +57,12 @@ if errorlevel 1 (
 )
 echo.
 
+REM Panel'deki "Sunucu Baslat" butonu start.bat'i bulabilsin diye yolu yaz
+echo [3.6/3] Sunucu yolu panele kaydediliyor...
+> "%TARGET%\server_path.txt" echo %~dp0start.bat
+echo       OK (%~dp0start.bat)
+echo.
+
 REM FFmpeg kurulum kontrolu
 echo [4/3] FFmpeg kontrol ediliyor...
 set "FFMPEG_OK=0"
@@ -90,12 +96,15 @@ if "%FFMPEG_OK%"=="0" (
 echo.
 
 echo ===================================================
-echo   KURULUM TAMAM.
+echo   PANEL KURULUMU TAMAM.
 echo.
-echo   Premiere Pro'yu yeniden baslat
-echo   Window ^> Extensions ^> FreeCaption menusunden ac
+echo   1^) Sunucu kurulmadiysa once: install.bat
+echo   2^) Sunucuyu baslat:          start.bat   (acik birak)
+echo      ^(veya panel icindeki  Sunucu Baslat  tusu^)
+echo   3^) Premiere Pro'yu yeniden baslat
+echo      Window ^> Extensions ^> FreeCaption menusunden ac
 echo.
-echo   Onceden start_hidden.vbs ile sunucu calisiyor olmali.
+echo   Istersen autostart_kur.bat ile her acilista otomatik baslat.
 echo ===================================================
 echo.
 pause

@@ -7,6 +7,24 @@ Sürümleme [Semantic Versioning](https://semver.org/lang/tr/) kuralına uyar.
 
 ---
 
+## [1.1.1] — 2026-06-22
+
+Yerel sunucuyu kuran/başlatan scriptler repoda eksikti, eklendi. README ve `cep_kur.bat` `install.bat`, `start.bat`, `start_hidden.vbs`, `autostart_kur.bat`'tan bahsediyordu ama bu dosyalar hiç eklenmemişti. Sonuçta panel kuruluyor, backend başlatılamıyor, panelde "Sunucu kapalı" görünüyordu.
+
+### Eklenenler
+
+- `install.bat` — `.venv` kurar, NVIDIA GPU varsa CUDA 12.8 PyTorch (RTX 50 serisi dahil) yoksa CPU sürümü, ardından Whisper/WhisperX/FastAPI ve FFmpeg
+- `start.bat` — sunucuyu görünür terminalde başlatır (GPU/CPU modunu kendisi seçer)
+- `start_hidden.vbs` — penceresiz başlatma
+- `autostart_kur.bat` — açılışta otomatik başlatma kısayolu
+
+### Düzeltmeler
+
+- `cep_kur.bat` artık kuruluma `server_path.txt` bırakıyor; panelin "Sunucu Başlat" tuşu `start.bat`'i kendisi buluyor. Bu tuş eskiden yol hiç ayarlanamadığı için çalışmıyordu.
+- GPU modeli yüklenemediğinde (yeni GPU ↔ eski ctranslate2) backend çökmek yerine CPU'ya düşüyor.
+
+---
+
 ## [1.0.0] — 2026-05-17
 
 **FreeCaption v1.0 — İlk kararlı sürüm.** Premiere Pro için Türkçe Whisper altyazı eklentisi: CEP UI + Windows VDS deploy + Adobe ExtendScript timeline entegrasyonu.

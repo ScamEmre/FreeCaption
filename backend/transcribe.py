@@ -87,26 +87,43 @@ class Transcriber:
         self._align_metadata = None
         self._align_language: Optional[str] = None
 
+    def _build_whisper(self, device: str, compute_type: str):
+        if DISABLE_ALIGNMENT:
+            # CPU/VDS mode: faster_whisper'i dogrudan kullan (whisperx -> torchaudio
+            # DLL bagimligindan kacin)
+            from faster_whisper import WhisperModel
+            return WhisperModel(
+                WHISPER_MODEL,
+                device=device,
+                compute_type=compute_type,
+                download_root=str(MODEL_CACHE_DIR),
+            )
+        import whisperx
+        return whisperx.load_model(
+            WHISPER_MODEL,
+            device=device,
+            compute_type=compute_type,
+            download_root=str(MODEL_CACHE_DIR),
+        )
+
     def _load_whisper(self):
         if self._whisper is None:
-            if DISABLE_ALIGNMENT:
-                # CPU/VDS mode: faster_whisper'i dogrudan kullan (whisperx -> torchaudio
-                # DLL bagimligindan kacin)
-                from faster_whisper import WhisperModel
-                self._whisper = WhisperModel(
-                    WHISPER_MODEL,
-                    device=self.device,
-                    compute_type=self.compute_type,
-                    download_root=str(MODEL_CACHE_DIR),
-                )
-            else:
-                import whisperx
-                self._whisper = whisperx.load_model(
-                    WHISPER_MODEL,
-                    device=self.device,
-                    compute_type=self.compute_type,
-                    download_root=str(MODEL_CACHE_DIR),
-                )
+            try:
+                self._whisper = self._build_whisper(self.device, self.compute_type)
+            except Exception as e:
+                # GPU yuklenemezse (ornek: yeni GPU mimarisi <-> eski ctranslate2,
+                # CUDA/cuDNN eksigi) sunucuyu cokertme -> CPU'ya dus.
+                if self.device == "cuda":
+                    print(
+                        f"[FreeCaption] GPU model yuklenemedi ({e}). CPU'ya geciliyor "
+                        f"(daha yavas ama calisir).",
+                        flush=True,
+                    )
+                    self.device = "cpu"
+                    self.compute_type = COMPUTE_TYPE_CPU
+                    self._whisper = self._build_whisper(self.device, self.compute_type)
+                else:
+                    raise
         return self._whisper
 
     def _load_aligner(self, language_code: str):
