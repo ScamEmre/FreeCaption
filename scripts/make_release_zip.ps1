@@ -1,5 +1,5 @@
 # FreeCaption - release zip'i uretir: dist\FreeCaption-v<surum>.zip
-# Kullanim (repo kokunden):  powershell -ExecutionPolicy Bypass -File scripts\make_release_zip.ps1 -Version 1.1.2
+# Kullanim (repo kokunden):  powershell -ExecutionPolicy Bypass -File scripts\make_release_zip.ps1 -Version 1.1.3
 # Zip icinde ust klasor "FreeCaption\" olur; kisisel/buyuk klasorler hari tutulur.
 param([Parameter(Mandatory = $true)][string]$Version)
 $ErrorActionPreference = 'Stop'
