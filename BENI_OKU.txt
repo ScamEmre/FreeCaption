@@ -2,6 +2,7 @@
 ==============================================================
 
 Bu dosyayı Not Defteri'nde okuyorsunuz. Doğru yerdesiniz.
+Sürüm 1.1.3 - Son güncelleme: 8 Ekim 2026
 Sadece 4 adım var. Toplam süre: 10-25 dakika (çoğu bekleme).
 
 GEREKENLER
