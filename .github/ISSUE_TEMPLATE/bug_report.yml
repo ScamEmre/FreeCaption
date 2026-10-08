@@ -9,7 +9,7 @@ body:
       value: |
         Teşekkürler! 🙏 Hata bildirimini incelemeden önce lütfen şu kontrolleri yap:
         - [Mevcut issue'lara baktın mı?](https://github.com/ScamEmre/FreeCaption/issues?q=is%3Aissue)
-        - [README](https://github.com/ScamEmre/FreeCaption/blob/main/README.md) ve [VDS_DEPLOYMENT](https://github.com/ScamEmre/FreeCaption/blob/main/01_Rehberler_ve_Raporlar/VDS_DEPLOYMENT.md) okudun mu?
+        - [Kurulum Rehberi](https://github.com/ScamEmre/FreeCaption/blob/main/KURULUM_REHBERI.md) ve [RUNBOOK](https://github.com/ScamEmre/FreeCaption/blob/main/RUNBOOK.md) sorun giderme bölümlerine baktın mı? Ekranda gördüğün hata mesajının çözümü orada olabilir.
 
   - type: textarea
     id: description
@@ -60,7 +60,7 @@ body:
     attributes:
       label: Premiere Pro Sürümü
       description: "Help → About Adobe Premiere Pro"
-      placeholder: "örn: 24.4.1"
+      placeholder: "örn: 25.6 ya da 26.0 (Premiere Pro 2026)"
     validations:
       required: true
 
@@ -83,6 +83,7 @@ body:
     attributes:
       label: Loglar
       description: |
+        - Kurulum sorunuysa: FreeCaption klasöründeki **`install_log.txt`** dosyasının içeriği
         - Lokal: `backend/output/error.log` veya `start.bat` terminalindeki son çıktı
         - VDS: SSH/RDP ile `Get-Content C:\FreeCaption\logs\backend-stderr.log -Tail 50`
         - Plugin: Chrome'dan `http://localhost:8088` → FreeCaption → DevTools → Console
@@ -96,7 +97,7 @@ body:
     id: screenshots
     attributes:
       label: Ekran Görüntüsü / Video
-      description: Sürükle bırak veya yapıştır. Panel + timeline beraber gözüksün ideal.
+      description: Sürükle bırak veya yapıştır. Kurulum hatasıysa siyah pencerenin ekran görüntüsü yeterli. Panel sorunuysa panel + timeline beraber gözüksün.
 
   - type: checkboxes
     id: confirmations
