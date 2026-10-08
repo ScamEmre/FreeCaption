@@ -7,6 +7,26 @@ Sürümleme [Semantic Versioning](https://semver.org/lang/tr/) kuralına uyar.
 
 ---
 
+## [1.1.3] — 2026-10-08
+
+Teknik bilgisi olmayanlar için sadeleştirme sürümü. Kurulum mantığı v1.1.2 ile aynı; bu sürümde anlatım, rehberler ve küçük düzeltmeler yenilendi.
+
+### Değişenler
+
+- `README.md` baştan düzenlendi: önce "FreeCaption nedir" ve **3 adımda kurulum**, sonra kullanım, gereksinimler ve sık sorulan sorular. Teknik bölümler (ileri düzey kurulum, uzak sunucu, çalışma şeması, katkı) en alta, "Geliştiriciler ve ileri düzey" başlığına taşındı.
+- `KURULUM_REHBERI` (md/html) ve `BENI_OKU.txt`: emojili başlıklar, sürüm bilgisi, Premiere 2026 için **Extensions (Legacy)** notu, destek bölümü.
+- `autostart_kur.bat`: bloksuz yapıya geçti, Başlangıç klasörü yoksa oluşturuyor, boşluk/Türkçe karakter/parantezli yollarda çalışıyor.
+- `landing/index.html`: sürüm v1.1.3, "tek tıkla kurulum" (`KUR.bat`) ve gerçekçi kurulum süresi.
+- `RUNBOOK.md`: yerel kurulum bölümü, betik yazım kuralları; kişisel sunucu IP'si kaldırıldı; GitHub'da çalışmayan `{#id}` bağlantıları düzeltildi.
+- `CONTRIBUTING.md`, `.github/RELEASE_GUIDE.md`, issue şablonları güncellendi; olmayan `VDS_DEPLOYMENT.md` bağlantıları düzeltildi.
+
+### Eklenenler
+
+- `deploy/README.md` ve `frontend/README.md` — klasörlerin ne işe yaradığı
+- `scripts/make_release_zip.ps1` — tek komutla release zip'i
+
+---
+
 ## [1.1.2] — 2026-10-08
 
 Kurulum güvenilirliği sürümü. Bir kullanıcı `install.bat`'ın "[1/6] Python kontrol ediliyor..." satırında durup kapandığını bildirdi. Sorun yalnız o kişide değil, **herkesteydi**.
