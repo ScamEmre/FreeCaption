@@ -16,7 +16,7 @@
 
 *Sesi kelime kelime altyazıya çevir — saniyeler içinde, GPU ile, gizliliği koruyarak.*
 
-[🌐 Tanıtım](landing/index.html) · [Kurulum](#kurulum) · [Nasıl Çalışır](#nasıl-çalışır) · [VDS Kurulumu](#-uzak-sunucu-vds-kurulumu--opsiyonel) · [🛠 Runbook (Sorun Giderme)](RUNBOOK.md) · [SSS](#sss) · [Geliştirici](#geliştirici)
+[🌐 Tanıtım](landing/index.html) · [Kurulum](#kurulum) · [Kurulum Rehberi](KURULUM_REHBERI.md) · [Nasıl Çalışır](#nasıl-çalışır) · [VDS Kurulumu](#-uzak-sunucu-vds-kurulumu--opsiyonel) · [🛠 Runbook (Sorun Giderme)](RUNBOOK.md) · [SSS](#sss) · [Geliştirici](#geliştirici)
 
 </div>
 
@@ -57,51 +57,63 @@ Türk video editörlerin yıllardır beklediği şey: **Premiere Pro'da Türkçe
 
 ## Kurulum
 
+> **Teknik bilgin yoksa:** adım adım, ekran mesajlarıyla birlikte hazırlanmış **[Kurulum Rehberi](KURULUM_REHBERI.md)** dosyasını izle. Aşağıdaki özet, rehberin kısa halidir.
+
 ### Sistem Gereksinimleri
 
-- **Windows 10/11** (yerel sunucu) **veya macOS** (panel istemcisi — uzak VDS sunucusuna bağlanır)
+- **Windows 10/11, 64 bit** (yerel sunucu) **veya macOS** (panel istemcisi — uzak VDS sunucusuna bağlanır)
 - **Adobe Premiere Pro 23.0+** (2023, 2024, 2025, 2026, 2027 betası) — Windows & macOS
-- **Python 3.10-3.12** (kurulum sırasında otomatik kontrol edilir)
-- **FFmpeg** (kurulum sırasında otomatik yüklenir)
+- **En az 8 GB boş disk alanı** ve kurulum sırasında internet
+- **Python 3.10-3.12** — yoksa `install.bat` Python 3.12'yi kendisi kurar, elle kurman gerekmez
+- **FFmpeg** — kurulum sırasında otomatik yüklenir
 - **NVIDIA GPU (opsiyonel ama önerilen)** — RTX 20/30/40/50 serisi
-  - GPU yoksa CPU modunda çalışır (5-10x daha yavaş)
+  - GPU varsa **GPU modu**: hızlı, `large-v3` modeli, kelime kelime senkron
+  - GPU yoksa (ya da sürücü eskiyse) **CPU modu**: 5-10x daha yavaş, `medium` modeli; yine de çalışır. Mod kurulumda otomatik seçilir.
 
-### Adım 1 — Bilgileri Yükle
+### En kolay yol: KUR.bat
+
+1. Zip'i **önce klasöre çıkar** (sağ tık → *Tümünü ayıkla*). Klasör `C:\FreeCaption` gibi sade olsun: yolda Türkçe karakter ve OneDrive olmasın. Zip'in içinden çalıştırma.
+2. **`KUR.bat`** dosyasına çift tıkla. Windows "Bilinmeyen yayımcı" ekranı çıkarırsa *Ek bilgi → Yine de çalıştır*.
+3. Sunucu kurulumu, Premiere paneli ve sunucu başlatma sırayla otomatik yapılır (10-25 dk). **"HER SEY HAZIR!"** yazısını bekle.
+4. Premiere Pro'yu kapatıp yeniden aç → **Window → Extensions → FreeCaption**.
+
+Ayrıntılar ve ekranda görülen hata mesajlarının çözümleri: **[KURULUM_REHBERI.md](KURULUM_REHBERI.md)** (tarayıcıda okumak için `KURULUM_REHBERI.html`).
+
+### İleri düzey: adım adım kurulum
+
+`KUR.bat` aşağıdaki üç dosyayı sırayla çalıştırır. İstersen tek tek de çalıştırabilirsin.
+
+**Kaynak kodu al:**
 
 ```bash
 git clone https://github.com/ScamEmre/FreeCaption.git
 cd FreeCaption
 ```
 
-veya **Code → Download ZIP** olarak indir ve istediğin yere çıkar.
+veya **Code → Download ZIP** olarak indir ve klasöre çıkar.
 
-### Adım 2 — Python + Bağımlılıklar
-
-`install.bat` dosyasına **çift tıkla**. Sihirbaz:
-1. Python kurulu mu kontrol eder, yoksa kurulum linki gösterir
-2. FFmpeg yoksa `winget` ile otomatik yükler
+**1) `install.bat` — sunucu kurulumu (10-25 dk).** Sırayla:
+1. Disk alanı, klasör yolu ve internet kontrolü yapar
+2. Python 3.10-3.12 (64-bit) yoksa **Python 3.12'yi kendisi kurar** (`winget`, olmazsa python.org)
 3. Sanal ortam (`.venv`) oluşturur
-4. PyTorch (GPU varsa CUDA 12.8) + Whisper + WhisperX yükler
+4. GPU'yu tespit eder: NVIDIA GPU varsa CUDA 12.8 PyTorch (~3 GB), yoksa ya da GPU test edilemezse **CPU moduna** geçer
+5. Whisper + WhisperX + FastAPI bileşenlerini yükler
+6. FFmpeg yoksa kurar
+7. Kurulumu doğrular; sonunda `KURULUM TAMAM. Mod: gpu` (veya `cpu`) yazar
 
-⏱️ İlk kurulum: 5-15 dakika (~5 GB internet + disk).
+Her çalıştırmada kurulum kaydı `install_log.txt` dosyasına yazılır; sorun bildirirken bu dosyayı gönder. Hata olursa `install.bat`'ı tekrar çalıştırmak kaldığı yerden devam eder.
 
-### Adım 3 — CEP Plugin'i Premiere'e Bağla
+**2) `cep_kur.bat` — Premiere paneli (yönetici izni gerekmez).**
+- **Windows:** CEP debug modunu açar ve paneli `%APPDATA%\Adobe\CEP\extensions\FreeCaption` klasörüne kopyalar.
+- **macOS:** Terminal'de `chmod +x cep_kur.sh && ./cep_kur.sh` çalıştır — CEP debug modunu açar, plugin'i `~/Library/Application Support/Adobe/CEP/extensions/FreeCaption` klasörüne kopyalar ve gerekirse FFmpeg'i Homebrew ile kurar.
 
-**Windows:** `cep_kur.bat` dosyasına çift tıkla. Sihirbaz:
-1. CEP debug modunu Windows registry'e yazar
-2. Plugin'i `%APPDATA%\Adobe\CEP\extensions\FreeCaption` klasörüne kopyalar
+**3) `start.bat` — sunucuyu başlat.** Siyah bir pencerede sunucu açılır; **pencere açık kalmalı** (küçültebilirsin). İlk altyazıda Whisper modeli indirilir (1-3 GB).
 
-**macOS:** Terminal'de `chmod +x cep_kur.sh && ./cep_kur.sh` çalıştır — CEP debug modunu açar, plugin'i `~/Library/Application Support/Adobe/CEP/extensions/FreeCaption` klasörüne kopyalar ve gerekirse FFmpeg'i Homebrew ile kurar.
+Sonra Premiere'i yeniden başlat ve **Window → Extensions → FreeCaption** menüsünden paneli aç.
 
-Premiere'i yeniden başlat. **Window → Extensions → FreeCaption** menüsünden paneli aç.
+**Sonraki kullanımlar:** bilgisayarı açınca `start.bat`'a çift tıkla. Her açılışta kendiliğinden başlasın istersen `autostart_kur.bat` çalıştır (kaldırmak için `Win+R` → `shell:startup` → FreeCaption kısayolunu sil).
 
-### Adım 4 — Sunucuyu Başlat
-
-`start.bat` dosyasına çift tıkla — görünür terminalde Python sunucusu başlar.
-
-Bilgisayar her açıldığında otomatik başlasın istersen: `autostart_kur.bat` çalıştır.
-
-> **Veya:** Panel üzerindeki **▶ Sunucu Başlat** butonu da aynı işi yapar.
+> **Veya:** Panel üzerindeki **Sunucu Başlat** butonu da sunucuyu başlatır.
 
 > **🍎 macOS notu:** Yerel Python sunucusu şu an yalnız **Windows/Linux**'ta çalışır. macOS'ta paneli kurduktan sonra **Uzak Sunucu (VDS)** moduyla bir Windows/Linux sunucusuna bağlanın (aşağıdaki [VDS Kurulumu](#-uzak-sunucu-vds-kurulumu--opsiyonel)).
 

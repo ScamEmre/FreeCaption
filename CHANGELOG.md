@@ -7,6 +7,36 @@ Sürümleme [Semantic Versioning](https://semver.org/lang/tr/) kuralına uyar.
 
 ---
 
+## [1.1.2] — 2026-10-08
+
+Kurulum güvenilirliği sürümü. Bir kullanıcı `install.bat`'ın "[1/6] Python kontrol ediliyor..." satırında durup kapandığını bildirdi. Sorun yalnız o kişide değil, **herkesteydi**.
+
+### Kök neden
+
+- `install.bat` içinde bir `if ( ... )` bloğunun içindeki yazıda kaçışsız `)` vardı (`("Add Python to PATH" isaretle)`). `cmd.exe` bloğu o noktada kapatıyor, ardından gelen `pause` ve `exit /b 1` Python bulunsa bile koşulsuz çalışıyordu. Sonuç: kurulum hiçbir hata yazmadan "Press any key to continue" ile bitiyordu. Aynı türden hatalar `cep_kur.bat` içinde de vardı (`(VDS)`, `(winget)...`, `(Sistemde FFmpeg mevcut)`; ayrıca blok içinde `%errorlevel%` yanlış okunuyordu).
+- `.bat` dosyaları repoda LF satır sonuyla duruyordu; `cmd.exe` LF'li dosyalarda `goto`/`call :etiket` yapılarını yanlış ayrıştırabiliyor. `.gitattributes` ile CRLF zorunlu kılındı.
+
+### Eklenenler
+
+- `KUR.bat` — tek tıkla kurulum: sunucu + Premiere paneli + sunucuyu başlat
+- `install_log.txt` — kurulum kaydı (yardım isterken gönderilir)
+- `scripts/get_python.ps1`, `scripts/get_ffmpeg.ps1` — winget yoksa Python 3.12 ve FFmpeg'i doğrudan indirip kurar
+- `.gitattributes` — `.bat`/`.vbs`/`.ps1` için CRLF
+- `KURULUM_REHBERI.md` / `.html` / `BENI_OKU.txt` — teknik bilgisi olmayanlar için adım adım rehber ve ekran mesajına göre sorun giderme
+
+### Değişenler
+
+- `install.bat` baştan yazıldı (blok yok, etiket tabanlı): Python 3.10-3.12 64-bit'i `py` başlatıcı, PATH ve bilinen klasörlerden bulur; Microsoft Store sahte `python.exe`'sini atlar; yoksa kendi kurar. Her pip adımı 3 kez dener.
+- Kurulum öncesi kontroller: zip'ten çıkarılmamış klasör, klasör yolunda Türkçe karakter / OneDrive, boş disk (en az 8 GB), internet.
+- Microsoft Visual C++ bileşeni eksikse kurulur (`WinError 126` / DLL hatasının yaygın nedeni).
+- GPU: NVIDIA sürücü sürümü denetlenir; CUDA 12.8 → 12.6 → CPU sırasıyla gerçek bir GPU işlemiyle sınanır (eski GPU'larda "kernel image" hatası kurulumda yakalanır). Seçilen mod `.venv/fc_mode.txt` dosyasına yazılır.
+- Kurulum sonunda paketler yalnız var mı diye değil, gerçekten `import` edilerek doğrulanır; hata varsa otomatik onarım denenir.
+- `start.bat` modu `fc_mode.txt`'den okur, GPU belleği 6 GB altındaysa `medium` modelini seçer, sunucu zaten çalışıyorsa ikinci kez açmaz, hata kodunu gösterir.
+- `cep_kur.bat`: kaçışsız parantez hataları giderildi, Premiere açıksa uyarır, CSXS 13/14 izni eklendi, kopyalamayı doğrular, boşluklu kullanıcı adlarında panelin "Sunucu Başlat" tuşu için kısa (8.3) yol yazar.
+- `backend/audio.py`: proje klasörüne indirilen `ffmpeg\bin` otomatik bulunur.
+
+---
+
 ## [1.1.1] — 2026-06-22
 
 Yerel sunucuyu kuran/başlatan scriptler repoda eksikti, eklendi. README ve `cep_kur.bat` `install.bat`, `start.bat`, `start_hidden.vbs`, `autostart_kur.bat`'tan bahsediyordu ama bu dosyalar hiç eklenmemişti. Sonuçta panel kuruluyor, backend başlatılamıyor, panelde "Sunucu kapalı" görünüyordu.

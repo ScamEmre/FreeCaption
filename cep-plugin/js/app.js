@@ -182,7 +182,8 @@
   function resolveStartBat() {
     try {
       var saved = localStorage.getItem("fc_local_start_bat");
-      if (saved && saved.length > 0) return saved;
+      // Kayitli yol hala varsa kullan; tasinmis/bozuk ise server_path.txt'ten yeniden coz.
+      if (saved && saved.length > 0 && require("fs").existsSync(saved)) return saved;
     } catch (e) {}
     try {
       var fs = require("fs");
@@ -229,7 +230,9 @@
 
     // YOL 1: CEP'in resmi process API'si (en güvenilir)
     try {
-      if (window.cep && window.cep.process && typeof window.cep.process.createProcess === "function") {
+      // Yolda bosluk varsa (orn. "C:\Users\Ali Veli\...") createProcess argumani tirnaklamaz -> atla,
+      // Node spawn (YOL 2) bosluklu yolu kendisi tirnaklar.
+      if (batPath.indexOf(" ") === -1 && window.cep && window.cep.process && typeof window.cep.process.createProcess === "function") {
         // cmd /c start ile yeni görünür terminal aç
         var res = window.cep.process.createProcess(
           "cmd.exe", "/c",

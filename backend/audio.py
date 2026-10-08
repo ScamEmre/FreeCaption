@@ -11,6 +11,10 @@ def _find_ffmpeg() -> str:
     p = shutil.which("ffmpeg")
     if p:
         return p
+    # 1b) Proje klasorune install.bat'in indirdigi FFmpeg (winget'siz kurulum)
+    local_ff = Path(__file__).resolve().parent.parent / "ffmpeg" / "bin" / "ffmpeg.exe"
+    if local_ff.exists():
+        return str(local_ff)
     # 2) WinGet kurulumu (yeni surum)
     local = os.environ.get("LOCALAPPDATA", "")
     if local:
@@ -41,6 +45,9 @@ def _find_ffprobe() -> str:
     p = shutil.which("ffprobe")
     if p:
         return p
+    local_fp = Path(__file__).resolve().parent.parent / "ffmpeg" / "bin" / "ffprobe.exe"
+    if local_fp.exists():
+        return str(local_fp)
     local = os.environ.get("LOCALAPPDATA", "")
     if local:
         winget_link = os.path.join(local, "Microsoft", "WinGet", "Links", "ffprobe.exe")

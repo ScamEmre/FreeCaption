@@ -40,3 +40,7 @@ cep-plugin/.debug.bak
 # Release artifacts
 dist/
 
+
+# Kurulum ciktilari
+install_log.txt
+ffmpeg/

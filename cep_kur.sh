@@ -8,12 +8,14 @@ echo "  FreeCaption - macOS CEP Eklenti Kurulumu"
 echo "==================================================="
 echo ""
 
-# 1. CEP Debug Mode aktive et (CSXS 9, 10, 11, 12)
+# 1. CEP Debug Mode aktive et (CSXS 9-14)
 echo "[1/3] CEP debug modu aktif ediliyor..."
 defaults write com.adobe.CSXS.9 PlayerDebugMode 1 2>/dev/null || true
 defaults write com.adobe.CSXS.10 PlayerDebugMode 1 2>/dev/null || true
 defaults write com.adobe.CSXS.11 PlayerDebugMode 1 2>/dev/null || true
 defaults write com.adobe.CSXS.12 PlayerDebugMode 1 2>/dev/null || true
+defaults write com.adobe.CSXS.13 PlayerDebugMode 1 2>/dev/null || true
+defaults write com.adobe.CSXS.14 PlayerDebugMode 1 2>/dev/null || true
 echo "      OK"
 echo ""
 

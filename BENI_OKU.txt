@@ -1,0 +1,47 @@
+﻿FreeCaption - HIZLI KURULUM (Premiere Pro için Türkçe altyazı)
+==============================================================
+
+Bu dosyayı Not Defteri'nde okuyorsunuz. Doğru yerdesiniz.
+Sadece 4 adım var. Toplam süre: 10-25 dakika (çoğu bekleme).
+
+GEREKENLER
+  - Windows 10 veya 11 (64 bit)
+  - Premiere Pro 2023 veya daha yeni
+  - En az 8 GB boş disk alanı ve internet
+  - NVIDIA ekran kartı olması şart DEĞİL (yoksa daha yavaş çalışır)
+
+
+ADIM 1 - ZIP'İ KLASÖRE ÇIKARIN (en sık yapılan hata burada)
+  Zip dosyasına sağ tıklayın > "Tümünü ayıkla".
+  Klasörü şuraya koyun:  C:\FreeCaption
+  Zip'in içinden çift tıklayıp çalıştırmayın. Önce çıkarın.
+  (Yolda Türkçe karakter olmasın, OneDrive/Masaüstü olmasın.)
+
+ADIM 2 - KUR.bat DOSYASINA ÇİFT TIKLAYIN
+  Mavi "Windows korumalı" ekranı çıkarsa:
+  "Ek bilgi" > "Yine de çalıştır".
+  Siyah pencere açılır ve 10-25 dakika çalışır.
+  Pencereyi KAPATMAYIN. Bilgisayarı uyutmayın.
+  "HER SEY HAZIR!" yazısını görünce adım 3'e geçin.
+
+ADIM 3 - PREMIERE PRO'YU KAPATIP YENİDEN AÇIN
+  Açık olan siyah "FreeCaption - Sunucu" penceresi AÇIK kalsın
+  (küçültebilirsiniz). Kapanırsa altyazı üretilemez.
+
+ADIM 4 - PANELİ AÇIN VE DENEYİN
+  Premiere'de: Window (Pencere) > Extensions (Uzantılar) > FreeCaption
+  Klibi seçin, dili Türkçe yapın, "Altyazı Üret" düğmesine basın.
+  İlk denemeyi 30 saniyelik kısa bir klipte yapın.
+
+
+SONRAKİ GÜNLER
+  Bilgisayarı açınca C:\FreeCaption içindeki start.bat'a çift tıklayın,
+  siyah pencere açık kalsın, sonra Premiere'i açın.
+
+
+TAKILDINIZ MI?
+  Ayrıntılı, resimsiz ama adım adım rehber ve sorun giderme tablosu:
+      KURULUM_REHBERI.html   (tarayıcıda açın)
+      KURULUM_REHBERI.md
+  Yardım isterken ekran görüntüsü ve install_log.txt dosyasını gönderin:
+      https://github.com/ScamEmre/FreeCaption/issues
