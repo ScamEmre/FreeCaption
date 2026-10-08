@@ -1,21 +1,23 @@
-# FreeCaption'a Katkı Sağlama
+# 🤝 FreeCaption'a Katkı Sağlama
 
-FreeCaption açık kaynak, Türk video editörlerinin yıllardır beklediği Türkçe altyazı çözümü. Senin katkın projeyi daha iyi yapar — teşekkür ederiz!
+FreeCaption açık kaynak ve Türkçe altyazıyı Premiere'e getiriyor. Küçük bir yazım hatası düzeltmesi de, yeni bir özellik de projeyi ileri taşır. Katkın için teşekkürler!
 
 ## İçindekiler
 
-- [Hızlı başlangıç](#hızlı-başlangıç)
-- [Hata bildir](#hata-bildir-bug-report)
-- [Özellik öner](#özellik-öner-feature-request)
-- [Kod katkısı (Pull Request)](#kod-katkısı-pull-request)
-- [Geliştirme ortamı](#geliştirme-ortamı)
-- [Kod stili](#kod-stili)
-- [Commit mesajları](#commit-mesajları)
-- [Davranış kuralları](#davranış-kuralları)
+- [🚀 Hızlı başlangıç](#hizli-baslangic)
+- [🐛 Hata bildir](#hata-bildir)
+- [✨ Özellik öner](#ozellik-oner)
+- [🔀 Kod katkısı (Pull Request)](#pull-request)
+- [💻 Geliştirme ortamı](#gelistirme-ortami)
+- [🧾 Kod stili](#kod-stili)
+- [📝 Commit mesajları](#commit-mesajlari)
+- [🕊️ Davranış kuralları](#davranis-kurallari)
 
 ---
 
-## Hızlı Başlangıç
+<a id="hizli-baslangic"></a>
+
+## 🚀 Hızlı Başlangıç
 
 1. Repo'yu **fork** et (sağ üst "Fork")
 2. Lokal'e clone:
@@ -38,11 +40,13 @@ FreeCaption açık kaynak, Türk video editörlerinin yıllardır beklediği Tü
 
 ---
 
-## Hata Bildir (Bug Report)
+<a id="hata-bildir"></a>
+
+## 🐛 Hata Bildir
 
 Hata bulduğunda, sorunu **GitHub Issues** üzerinden bildirebilirsin. Daha hızlı çözüm için şu bilgileri ver:
 
-- **Premiere Pro sürümü** (örn. 24.4, 25.1)
+- **Premiere Pro sürümü** (örn. 25.1, 26.0)
 - **İşletim sistemi** (Windows 10/11, sürüm numarası)
 - **GPU** (NVIDIA / yok) + sürücü sürümü
 - **Çalışma modu** (lokal / VDS)
@@ -52,12 +56,15 @@ Hata bulduğunda, sorunu **GitHub Issues** üzerinden bildirebilirsin. Daha hız
   - Lokal: `backend/output/error.log`
   - VDS: `C:\FreeCaption\logs\backend-stderr.log`
 - **Ekran görüntüsü** veya video (tercihen panel + Premiere timeline)
+- **Kurulum sorunuysa:** hata ekranının görüntüsü ve FreeCaption klasöründeki **`install_log.txt`** dosyası. Çoğu kurulum hatası bu dosyadan anlaşılır
 
-Issue açarken **🐛 Bug Report** şablonunu kullan, alanları doldur.
+Issue açarken **🐛 Bug Report** şablonunu kullan, alanları doldur. Kurulum için önce [Kurulum Rehberi](KURULUM_REHBERI.md)'ndeki **Sorun giderme** tablosuna bak, çözüm orada olabilir.
 
 ---
 
-## Özellik Öner (Feature Request)
+<a id="ozellik-oner"></a>
+
+## ✨ Özellik Öner
 
 Yeni bir özellik için:
 
@@ -71,7 +78,9 @@ Yeni bir özellik için:
 
 ---
 
-## Kod Katkısı (Pull Request)
+<a id="pull-request"></a>
+
+## 🔀 Kod Katkısı (Pull Request)
 
 ### Önce iletişim
 
@@ -86,8 +95,9 @@ Büyük değişiklikler (>50 satır veya yeni özellik) için **önce issue aç*
    - `docs/readme-vds-section`
    - `refactor/subtitle-grouping`
 3. **Test et** — değişiklik yaptığın alanı manuel test et:
-   - Plugin değişikliği → `cep_kur.bat` çalıştır → Premiere kapat-aç → test
+   - Plugin değişikliği → `cep_kur.bat` çalıştır → Premiere kapat-aç → test. Premiere 2026'da paneli **Window > Extensions (Legacy)** altında ara
    - Backend değişikliği → lokal `start.bat` ile test, VDS'ye deploy etmeden önce
+   - `.bat` / kurulum değişikliği → **boşluk, Türkçe karakter ve parantez içeren bir klasörde** dene (örn. `C:\Test Klasörü (1)\FreeCaption`), sonra [betik kurallarına](#betik-kurallari) uyduğundan emin ol
 4. **Self-review** — PR'ı açmadan önce kendi diff'ini incele
 5. **PR şablonunu doldur** — değişiklik özeti, test adımları, ekran görüntüsü
 6. **Code review**'a açık ol — geri bildirim normal, kişisel değil
@@ -103,7 +113,9 @@ Büyük değişiklikler (>50 satır veya yeni özellik) için **önce issue aç*
 
 ---
 
-## Geliştirme Ortamı
+<a id="gelistirme-ortami"></a>
+
+## 💻 Geliştirme Ortamı
 
 ### Lokal Geliştirme (GPU önerilir)
 
@@ -112,7 +124,7 @@ Büyük değişiklikler (>50 satır veya yeni özellik) için **önce issue aç*
 - Python 3.12 (winget: `Python.Python.3.12`)
 - FFmpeg (winget: `Gyan.FFmpeg`)
 - Git, GitHub Desktop (opsiyonel)
-- Adobe Premiere Pro 23+ (CEP eklenti debug için)
+- Adobe Premiere Pro 2023 (23.0) ve üstü, 2026 (26.x) dahil (CEP eklenti debug için)
 
 **Kurulum (sadece geliştirme için):**
 
@@ -120,18 +132,11 @@ Büyük değişiklikler (>50 satır veya yeni özellik) için **önce issue aç*
 git clone https://github.com/ScamEmre/FreeCaption.git
 cd FreeCaption
 
-# Backend venv
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r backend\requirements.txt
-
-# Plugin AppData'ya kopyala
-cep_kur.bat
-
-# CEP debug mode (registry)
-reg add "HKCU\Software\Adobe\CSXS.11" /v PlayerDebugMode /t REG_SZ /d 1 /f
-reg add "HKCU\Software\Adobe\CSXS.12" /v PlayerDebugMode /t REG_SZ /d 1 /f
+# Sunucu + panel tek seferde (Python'u, PyTorch'u ve FFmpeg'i de kurar)
+KUR.bat
 ```
+
+`KUR.bat` içinde `install.bat` (sunucu), `cep_kur.bat` (panel + CEP debug izni, CSXS 9-14) ve `start.bat` çalışır. Sadece paneli güncellemek istersen `cep_kur.bat` yeter. Elle kurulum istersen `python -m venv .venv`, `pip install -r backend\requirements.txt` yeterli olmaz: PyTorch'un ve ctranslate2'nin sürümleri `install.bat` içinde sabitlenir, oradaki sırayı izle.
 
 **Lokal sunucuyu çalıştır:**
 
@@ -152,7 +157,9 @@ VDS'de production backend var. Geliştirme sırasında VDS'yi bozma; lokal'de te
 
 ---
 
-## Kod Stili
+<a id="kod-stili"></a>
+
+## 🧾 Kod Stili
 
 ### Python (backend)
 
@@ -183,6 +190,19 @@ VDS'de production backend var. Geliştirme sırasında VDS'yi bozma; lokal'de te
 - JSON yok, polyfill (`json2.js`) ile çözüldü
 - Hata yönetimi mutlaka `try/catch` ile, return string olarak
 
+<a id="betik-kurallari"></a>
+
+### Windows betikleri (`.bat`, `.vbs`, `.ps1`)
+
+v1.1.1'de `install.bat` bir `if ( ... )` bloğunda kaçışsız `)` içeriyordu ve kurulum **herkeste** sessizce duruyordu. Bu yüzden:
+
+- `.bat` dosyalarında **parantezli `if`/`for` bloğu kullanma**, `goto` ve `call :etiket` kullan. Yazıda parantez gerekiyorsa `^(` ve `^)` yaz.
+- Dosyalar **CRLF** satır sonuyla kaydedilir (`.gitattributes` bunu zorlar).
+- Betikteki yazılar ASCII (Türkçe karaktersiz) kalır. Konsol kod sayfası bozabilir.
+- Her yeni hata mesajı için [Kurulum Rehberi](KURULUM_REHBERI.md)'ndeki sorun giderme tablosuna bir satır ekle.
+
+Ayrıntı: [RUNBOOK, betik yazarken kurallar](RUNBOOK.md#yerel-kurulum).
+
 ### PowerShell (deploy)
 
 - `$ErrorActionPreference = "Continue"` (NSSM gibi non-fatal hatalar yutsun)
@@ -191,7 +211,9 @@ VDS'de production backend var. Geliştirme sırasında VDS'yi bozma; lokal'de te
 
 ---
 
-## Commit Mesajları
+<a id="commit-mesajlari"></a>
+
+## 📝 Commit Mesajları
 
 [Conventional Commits](https://www.conventionalcommits.org/tr/v1.0.0/) standardı:
 
@@ -240,9 +262,13 @@ docs: VDS deployment kılavuzu eklendi
 
 Türkçe / İngilizce karışık kullanılabilir, ama tek commit'te tutarlı ol.
 
+> 💡 GitHub ana sayfasında her dosyanın yanında **o dosyaya dokunan son commit'in mesajı** görünür. Bu yüzden mesajı, repoya ilk kez bakan biri okusa anlayacağı netlikte yaz: `düzeltme` yerine `fix(install): Python bulunsa bile kurulum duruyordu`. Türkçe karakterleri (ş ğ ı ö ü ç) kullanabilirsin.
+
 ---
 
-## Davranış Kuralları
+<a id="davranis-kurallari"></a>
+
+## 🕊️ Davranış Kuralları
 
 - **Saygılı ol** — herkesin farklı tecrübe seviyesi var
 - **Yapıcı ol** — "yanlış yapıyorsun" yerine "şu yaklaşım daha iyi olur"
@@ -256,6 +282,10 @@ Türk yazılım topluluğu küçük, herkes herkesi tanır. Profesyonel ol.
 ## Lisans
 
 Katkın MIT lisansı altında, FreeCaption'ın bir parçası olur. Detay: [LICENSE.md](LICENSE.md)
+
+## ☕ Destek
+
+FreeCaption ücretsiz ve açık kaynak. Katkı yapamıyorsan ama işine yaradıysa [bir kahve ısmarlayabilirsin](https://buymeacoffee.com/emrekazak). Zorunlu değil.
 
 ## İletişim
 
