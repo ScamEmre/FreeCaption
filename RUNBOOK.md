@@ -1,6 +1,6 @@
 # 🛠️ FreeCaption Runbook
 
-Sorun giderme ve sunucu işletme kılavuzu. Sürüm **1.1.2**, son güncelleme **8 Ekim 2026**.
+Sorun giderme ve sunucu işletme kılavuzu. Sürüm **1.1.3**, son güncelleme **8 Ekim 2026**.
 
 > **Ne zaman açmalı?** Kendi bilgisayarındaki kurulum takıldığında, panel Premiere'de görünmediğinde ya da ekip için bir Windows VDS kurarken. Komutlar kopyala-yapıştır çalışır.
 >
@@ -308,10 +308,10 @@ git push origin main
 Repo kökünde (PowerShell). Betik `.venv`, `.git`, `output`, `ffmpeg`, model ve önbellek klasörlerini zip'e **koymaz**; zip'in içinde üst klasör `FreeCaption\` olur:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\make_release_zip.ps1 -Version 1.1.2
+powershell -ExecutionPolicy Bypass -File scripts\make_release_zip.ps1 -Version 1.1.3
 ```
 
-Çıktı: `dist\FreeCaption-v1.1.2.zip` (yaklaşık 1,5 MB). Siteye de aynı dosyayı koyabilirsin.
+Çıktı: `dist\FreeCaption-v1.1.3.zip` (yaklaşık 1,5 MB). Siteye de aynı dosyayı koyabilirsin.
 
 > **Not:** Panelin içindeki **Güncelle** düğmesi release zip'ini kullanmaz. `main` dalının son commit'ini GitHub'dan indirir. Yani `main`'e push ettiğin düzeltme, panelin açılışında kullanıcılara kendiliğinden ulaşır. Release zip'i yeni kurulum yapacaklar içindir.
 
@@ -334,7 +334,7 @@ git push origin v1.1.0
 - [ ] **Choose a tag**: `v1.1.0` (yukarıda oluşturduğun)
 - [ ] **Release title**: `v1.1.0 — Konuşmacı Ayırma`
 - [ ] **Description**: CHANGELOG.md'deki ilgili bölümü kopyala/yapıştır (kullanıcı dilinde kısaltarak)
-- [ ] **Attach binaries**: `dist/FreeCaption-v1.1.2.zip` sürükle bırak (yeni sürüm numarasını yaz)
+- [ ] **Attach binaries**: `dist/FreeCaption-v1.1.3.zip` sürükle bırak (yeni sürüm numarasını yaz)
 - [ ] **Set as the latest release** ✓
 - [ ] **Publish release**
 
@@ -623,6 +623,6 @@ http://localhost:8088
 
 ## Sürüm Bilgisi
 
-Bu runbook: **v1.1.2** ile uyumlu (8 Ekim 2026). Kurulum betikleri ya da backend davranışı değiştiğinde bu doküman da güncellenir.
+Bu runbook: **v1.1.3** ile uyumlu (8 Ekim 2026). Kurulum betikleri ya da backend davranışı değiştiğinde bu doküman da güncellenir.
 
 GitHub'da güncel sürüm: [RUNBOOK.md](https://github.com/ScamEmre/FreeCaption/blob/main/RUNBOOK.md)
