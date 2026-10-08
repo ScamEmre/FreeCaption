@@ -20,7 +20,9 @@ Sorun giderme ve sunucu işletme kılavuzu. Sürüm **1.1.2**, son güncelleme *
 
 ---
 
-## ✅ Hızlı Yönlendirme {#siradaki-adim}
+<a id="siradaki-adim"></a>
+
+## ✅ Hızlı Yönlendirme
 
 | Durumun | Git |
 |---|---|
@@ -41,7 +43,9 @@ Kurulum adımları aşağıda: [🆕 Yeni Windows 11 VDS Kurulumu](#yeni-windows
 
 ---
 
-## 💻 Yerel Kurulum (Windows PC) {#yerel-kurulum}
+<a id="yerel-kurulum"></a>
+
+## 💻 Yerel Kurulum (Windows PC)
 
 Yerel kurulum üç dosyayla yapılır. En kolayı hepsini sırayla çalıştıran **`KUR.bat`**.
 
@@ -92,7 +96,9 @@ v1.1.1'de `install.bat` bir `if ( ... )` bloğunun içinde kaçışsız `)` içe
 
 ---
 
-## 🚨 ACİL — "Bir Şey Bozuk" {#acil}
+<a id="acil"></a>
+
+## 🚨 ACİL — "Bir Şey Bozuk"
 
 **Önce şu 3 sorunun cevabını bul:**
 
@@ -121,7 +127,9 @@ v1.1.1'de `install.bat` bir `if ( ... )` bloğunun içinde kaçışsız `)` içe
 
 ---
 
-## 🆕 Yeni Windows 11 VDS Kurulumu {#yeni-windows-11-vds-kurulumu}
+<a id="yeni-windows-11-vds-kurulumu"></a>
+
+## 🆕 Yeni Windows 11 VDS Kurulumu
 
 > **Önkoşul**: Windows 11 Pro yüklü VDS (4+ vCPU dedicated, 8 GB RAM, 25 GB disk), RDP erişimi.
 
@@ -216,7 +224,9 @@ Lokal makinende Premiere'i aç:
 
 ---
 
-## 🔄 Eski Sunucudan Yeni VDS'ye Geçiş {#migration}
+<a id="migration"></a>
+
+## 🔄 Eski Sunucudan Yeni VDS'ye Geçiş
 
 Mevcut sunucu durmaya devam etsin, paralel olarak yeni Win 11 VDS kur.
 
@@ -242,7 +252,9 @@ Mevcut sunucu durmaya devam etsin, paralel olarak yeni Win 11 VDS kur.
 
 ---
 
-## 📦 Güncelleme + Yeni Release Yayınlama {#guncelleme}
+<a id="guncelleme"></a>
+
+## 📦 Güncelleme + Yeni Release Yayınlama
 
 ### Senaryo: Bir kod değişikliği yaptın, yeni sürüm yayınlamak istiyorsun
 
@@ -374,7 +386,9 @@ Premiere kapat-aç.
 
 ---
 
-## 🧰 Tipik VDS Sorunları {#tipik-sorunlar}
+<a id="tipik-sorunlar"></a>
+
+## 🧰 Tipik VDS Sorunları
 
 ### 1) winget "msstore certifika hatası"
 
@@ -517,7 +531,9 @@ Get-ChildItem C:\FreeCaption\logs -File -ErrorAction SilentlyContinue | Where-Ob
 
 ---
 
-## 📊 Sağlık Kontrolleri {#saglik-kontrolleri}
+<a id="saglik-kontrolleri"></a>
+
+## 📊 Sağlık Kontrolleri
 
 ### Tek satır health check (sunucuda)
 
@@ -535,7 +551,9 @@ try { "DIS HEALTH: " + (Invoke-WebRequest "http://$ip/api/health" -Headers @{"X-
 
 ---
 
-## 📚 Komut Hatırlatıcı {#komut-hatirlatici}
+<a id="komut-hatirlatici"></a>
+
+## 📚 Komut Hatırlatıcı
 
 ### Sunucuda (RDP içinden)
 
