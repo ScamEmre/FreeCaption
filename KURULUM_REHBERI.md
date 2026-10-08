@@ -4,6 +4,8 @@ Bu rehber, Premiere Pro'da Türkçe otomatik altyazı yapan FreeCaption eklentis
 
 Toplam süre: 10-25 dakika. Bunun çoğu beklemektir.
 
+_Sürüm 1.1.3 · Son güncelleme: 8 Ekim 2026_
+
 ## 📋 Başlamadan önce
 
 | Gereken | Ayrıntı |
