@@ -30,6 +30,7 @@ ADIM 3 - PREMIERE PRO'YU KAPATIP YENİDEN AÇIN
 
 ADIM 4 - PANELİ AÇIN VE DENEYİN
   Premiere'de: Window (Pencere) > Extensions (Uzantılar) > FreeCaption
+  Premiere 2026'da menüde yoksa: Window > Extensions (Legacy) > FreeCaption
   Klibi seçin, dili Türkçe yapın, "Altyazı Üret" düğmesine basın.
   İlk denemeyi 30 saniyelik kısa bir klipte yapın.
 
@@ -45,3 +46,8 @@ TAKILDINIZ MI?
       KURULUM_REHBERI.md
   Yardım isterken ekran görüntüsü ve install_log.txt dosyasını gönderin:
       https://github.com/ScamEmre/FreeCaption/issues
+
+
+DESTEK
+  FreeCaption ücretsiz ve açık kaynak. İşinize yaradıysa bir kahve
+  ısmarlayabilirsiniz (zorunlu değil): https://buymeacoffee.com/emrekazak

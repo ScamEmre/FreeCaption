@@ -1,10 +1,10 @@
 # FreeCaption Kurulum Rehberi
 
-Bu rehber, Premiere Pro'da Türkçe otomatik altyazı yapan FreeCaption eklentisini **sıfırdan, tek başına** kurmanız içindir. Teknik bilgi gerekmez. Adımları sırayla izleyin; her adımın sonunda "Ne görmelisin" satırı var. Gördüğünüz şey farklıysa en alttaki [Sorun giderme](#sorun-giderme) tablosuna bakın.
+Bu rehber, Premiere Pro'da Türkçe otomatik altyazı yapan FreeCaption eklentisini **sıfırdan, tek başına** kurmanız içindir. Teknik bilgi gerekmez. Adımları sırayla izleyin; her adımın sonunda "Ne görmelisin" satırı var. Gördüğünüz şey farklıysa en alttaki **Sorun giderme** tablosuna bakın.
 
 Toplam süre: 10-25 dakika. Bunun çoğu beklemektir.
 
-## Başlamadan önce
+## 📋 Başlamadan önce
 
 | Gereken | Ayrıntı |
 |---|---|
@@ -21,7 +21,7 @@ Ekran kartına göre iki çalışma biçimi vardır. Kurulum bunu sizin yerinize
 
 Mac kullanıyorsanız bu rehber size göre değil. Mac'te yerel sunucu çalışmaz. Ana sayfadaki [README](README.md) dosyasında "Uzak Sunucu (VDS)" bölümüne bakın.
 
-## Adım 0: Zip dosyasını klasöre çıkarın
+## 📦 Adım 0: Zip dosyasını klasöre çıkarın
 
 Bu adım en sık yapılan hatadır. Zip dosyasını **çıkarmadan** içinden çalıştırırsanız kurulum başlamaz.
 
@@ -38,7 +38,7 @@ Klasör yolu için üç kural:
 
 **Ne görmelisin:** `C:\FreeCaption` klasörünü açınca içinde `KUR.bat`, `install.bat`, `start.bat` gibi dosyalar ve `backend`, `cep-plugin` gibi klasörler görünür.
 
-## Adım 1: KUR.bat dosyasını çalıştırın
+## ▶️ Adım 1: KUR.bat dosyasını çalıştırın
 
 1. `C:\FreeCaption` klasöründe **KUR.bat** dosyasına çift tıklayın.
 2. Mavi bir pencere çıkıp **"Windows korumalı"** veya **"Bilinmeyen yayımcı"** yazarsa, pencerede **Ek bilgi** yazısına, sonra **Yine de çalıştır** düğmesine tıklayın.
@@ -90,19 +90,22 @@ Bu aşama `cep_kur.bat` ile yapılır, yaklaşık bir dakika sürer. Panel dosya
 
 Şimdi **Premiere Pro'yu tamamen kapatın** (açıksa) ve **yeniden açın**. Premiere paneli ancak yeniden açılınca görür.
 
-## Adım 2: Paneli Premiere'de açın
+## 🎬 Adım 2: Paneli Premiere'de açın
 
 1. Premiere Pro'yu açın ve herhangi bir proje açın.
 2. Üst menüden **Window** (Türkçe Premiere'de **Pencere**) menüsüne tıklayın.
 3. **Extensions** (Türkçe: **Uzantılar**) satırına gelin.
 4. **FreeCaption** seçeneğine tıklayın.
 
+
+> **Premiere Pro 2026'da menüde göremezseniz:** Adobe, bu türden eski tip panelleri **Extensions (Legacy)** başlığı altına almış olabilir. **Window > Extensions (Legacy) > FreeCaption** yolunu da deneyin.
+
 **Ne görmelisin:** FreeCaption paneli açılır. Panelin sağ üstünde küçük bir durum etiketi vardır:
 
 - **"GPU: ..." (ekran kartı adıyla) veya "CPU modu":** Sunucu çalışıyor, her şey tamam.
 - **"Sunucu kapalı":** Siyah pencere kapanmış demektir. Aşağıdaki "Sonraki kullanımlar" kısmına bakın.
 
-## Adım 3: İlk altyazınızı üretin
+## ✍️ Adım 3: İlk altyazınızı üretin
 
 İlk denemeyi **kısa (yaklaşık 30 saniyelik)** bir klipte yapın.
 
@@ -116,7 +119,7 @@ Bu aşama `cep_kur.bat` ile yapılır, yaklaşık bir dakika sürer. Panel dosya
 
 Süre ekran kartına göre değişir. GPU ile 1 dakikalık ses yaklaşık 10-15 saniyede, CPU ile birkaç dakikada işlenir.
 
-## Sonraki kullanımlar
+## 🔁 Sonraki kullanımlar
 
 Kurulum **bir kerelik** yapılır. Sonraki günlerde yapacağınız tek şey:
 
@@ -133,7 +136,7 @@ Her seferinde `start.bat` açmak istemezseniz `autostart_kur.bat` dosyasına bir
 
 Bunu geri almak için: klavyede **Windows tuşu + R** tuşlarına basın, kutuya `shell:startup` yazıp **Tamam** deyin. Açılan klasörde **FreeCaption** kısayolunu silin.
 
-## Kaldırma
+## 🧹 Kaldırma
 
 1. Klavyede **Windows tuşu + R** tuşlarına basın.
 2. Kutuya `%APPDATA%\Adobe\CEP\extensions` yazın ve **Tamam** deyin.
@@ -141,7 +144,7 @@ Bunu geri almak için: klavyede **Windows tuşu + R** tuşlarına basın, kutuya
 4. `C:\FreeCaption` klasörünü silin.
 5. Kendiliğinden başlatmayı açtıysanız yukarıdaki "Kendiliğinden başlasın istiyorum" kısmındaki gibi kısayolu da silin.
 
-## Dosyalar ne işe yarar?
+## 📁 Dosyalar ne işe yarar?
 
 | Dosya | İşi |
 |---|---|
@@ -152,7 +155,7 @@ Bunu geri almak için: klavyede **Windows tuşu + R** tuşlarına basın, kutuya
 | `autostart_kur.bat` | Sunucuyu bilgisayar açılışında kendiliğinden başlatır |
 | `install_log.txt` | Kurulum kaydı. Yardım isterken bunu gönderin |
 
-## Sorun giderme
+## 🛠️ Sorun giderme
 
 Ekranda gördüğünüz mesajı aşağıdaki tabloda bulun. Mesajlar ekranda Türkçe karakter olmadan çıkar, tabloda da aynen öyle yazılmıştır.
 
@@ -175,10 +178,10 @@ Ekranda gördüğünüz mesajı aşağıdaki tabloda bulun. Mesajlar ekranda Tü
 | `Sunucu kurulmamis (.venv bulunamadi)` (start.bat'ta) | Kurulum yapılmamış. Önce KUR.bat'ı çalıştırın. |
 | `FreeCaption zaten calisiyor (port 7860 dolu)` | Sunucu zaten açık, yeni pencere gerekmez. Panel yine de bağlanmıyorsa bilgisayarı yeniden başlatın. |
 | Panelde `Sunucu kapalı` | Siyah pencere açık mı bakın. Açık değilse `start.bat` dosyasına çift tıklayın. Panelde **Sunucu Başlat** düğmesi de vardır. |
-| Premiere'de Window > Extensions menüsünde FreeCaption yok | Premiere'i tamamen kapatıp yeniden açın. Olmazsa `cep_kur.bat` dosyasını tekrar çalıştırın. Premiere sürümünüz 2023'ten (23.0) eskiyse eklenti desteklenmez. |
+| Premiere'de Window > Extensions menüsünde FreeCaption yok | Önce **Window > Extensions (Legacy)** altına bakın (Premiere 2026'da panel orada olabilir). Yoksa Premiere'i tamamen kapatıp yeniden açın. Olmazsa `cep_kur.bat` dosyasını tekrar çalıştırın. Premiere sürümünüz 2023'ten (23.0) eskiyse eklenti desteklenmez. |
 | Panel açılıyor ama boş veya beyaz | Premiere'i yeniden başlatın. Olmazsa `cep_kur.bat` dosyasını tekrar çalıştırın. |
 
-## Hâlâ olmuyorsa
+## 🆘 Hâlâ olmuyorsa
 
 Yardım isterken şunları gönderin:
 
@@ -187,3 +190,8 @@ Yardım isterken şunları gönderin:
 3. Windows sürümünüz ve ekran kartı modeliniz.
 
 Bildirim adresi: [github.com/ScamEmre/FreeCaption/issues](https://github.com/ScamEmre/FreeCaption/issues)
+
+
+## ☕ Destek
+
+FreeCaption ücretsiz ve açık kaynak. İşinize yaradıysa [bir kahve ısmarlayabilirsiniz](https://buymeacoffee.com/emrekazak). Zorunlu değil, geliştirmeye ayrılan zamanı destekler. Teşekkürler!
