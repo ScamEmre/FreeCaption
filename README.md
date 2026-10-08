@@ -161,7 +161,7 @@ Panel'de **⚙ Sunucu Ayarları** butonu:
 
 Health badge yeşil olunca tamam — transcribe artık sunucuda çalışır.
 
-> Detaylı VDS kılavuzu: [01_Rehberler_ve_Raporlar/VDS_DEPLOYMENT.md](../../01_Rehberler_ve_Raporlar/VDS_DEPLOYMENT.md)
+> Detaylı VDS kılavuzu ve sorun giderme: [RUNBOOK.md](RUNBOOK.md#yeni-windows-11-vds-kurulumu)
 
 ---
 
