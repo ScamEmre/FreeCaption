@@ -1,5 +1,6 @@
 ' FreeCaption - sunucuyu gizli (penceresiz) baslatir.
 ' cep_kur.bat ve autostart_kur.bat bu dosyayi kullanir.
+' start.bat bu modda (FREECAPTION_SILENT=1) pause'suz kapanir; sunucu zaten aciksa ikinci kez acilmaz.
 Option Explicit
 Dim sh, fso, scriptDir
 Set sh  = CreateObject("WScript.Shell")
