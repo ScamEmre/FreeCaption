@@ -1,149 +1,73 @@
-# GitHub Release Oluşturma Kılavuzu
+# 📦 Sürüm Yayınlama Kılavuzu
 
-FreeCaption sürüm yayınlama adımları. İlk release (`v1.0.0`) bu kılavuzla manuel oluşturulur, sonraki release'lar için `gh` CLI tabanlı script eklenebilir.
+FreeCaption'ın yeni sürümünü yayınlama adımları. Örnekler **v1.1.2** içindir; kendi sürüm numaranla değiştir.
 
-## Önkoşullar
+> 💡 **Önemli:** Panelin içindeki **Güncelle** düğmesi release zip'ini kullanmaz. `main` dalının son commit'ini GitHub'dan indirir. Yani `main`'e push ettiğin her düzeltme, kullanıcıların panelinde güncelleme olarak çıkar. Release zip'i, **yeni kurulum yapacaklar** ve siteden indirenler içindir.
 
-- Local'de tüm commit'ler push edilmiş
-- `CHANGELOG.md` ilgili sürüm için güncel
-- `package.json` veya benzeri version bump (FreeCaption'da yok, doğrudan tag kullanılır)
+## ✅ Önkoşullar
 
-## v1.0.0 Release — İlk Sürüm
+- Tüm değişiklikler `main`'e push edildi
+- `CHANGELOG.md` yeni sürümü anlatıyor (kullanıcının anlayacağı dille)
+- Kurulum betikleri (`install.bat`, `start.bat`, `cep_kur.bat`, `KUR.bat`) **boşluk ve Türkçe karakter içeren bir klasörde** denendi
+- Betikler CRLF (`.gitattributes` zorlar)
 
-### 1) Plugin ZIP Oluştur
+## 1) Zip'i oluştur
 
-Repo root'unda PowerShell aç (örnek: `C:\projeler\FreeCaption`):
+Repo kökünde PowerShell:
 
 ```powershell
-# Repo root'undasın — cep-plugin alt klasörünü ZIP'le
-New-Item -ItemType Directory -Force -Path dist | Out-Null
-Compress-Archive -Path cep-plugin\* -DestinationPath dist\FreeCaption-plugin-v1.0.0.zip -Force
+powershell -ExecutionPolicy Bypass -File scripts\make_release_zip.ps1 -Version 1.1.2
 ```
 
-Çıktı: `dist/FreeCaption-plugin-v1.0.0.zip` (~54 KB, 12 dosya — Adobe CEP extension hazır paketi).
+Çıktı: `dist\FreeCaption-v1.1.2.zip` (yaklaşık 1,5 MB, zip içinde üst klasör `FreeCaption\`).
 
-`dist/` klasörü `.gitignore`'da, repo'ya işlenmez — sadece release asset olarak kullanılır.
+Betik şunları zip'e **koymaz**: `.venv`, `.git`, `.github`, `output`, `dist`, `ffmpeg`, `backend\.models`, `backend\.temp`, `__pycache__`, `install_log.txt`.
 
-### 2) Git Tag Oluştur
+`dist\` klasörü `.gitignore`'da, repoya girmez. Sadece release dosyası olarak kullanılır.
 
-Repo root'undayken:
+## 2) Zip'i dene
+
+Zip'i **temiz, boşluklu bir klasöre** çıkar (örn. `C:\Test Klasörü (1)`) ve `KUR.bat`'ı çalıştır. "HER SEY HAZIR!" yazısını görmeden yayınlama.
+
+## 3) Etiket (tag) oluştur
 
 ```bash
-git tag -a v1.0.0 -m "FreeCaption v1.0 - İlk kararlı sürüm"
-git push origin v1.0.0
+git tag -a v1.1.2 -m "v1.1.2: kurulum düzeltmesi, KUR.bat"
+git push origin v1.1.2
 ```
 
-**GitHub Desktop alternatifi:** **History** sekmesinde ilgili commit'e sağ tık → **Create Tag…** → `v1.0.0` yaz → **Push origin** ile tag'i de gönder.
+GitHub Desktop kullanıyorsan: **History** sekmesinde son commit'e sağ tık, **Create Tag…**, sonra **Push origin**.
 
-GitHub Desktop'ta tag pushlama: **History sekmesinde** ilgili commit'e sağ tık → **Create Tag...** → `v1.0.0` → sonra **Push origin** (tag'i de gönderir).
+## 4) GitHub'da release yayınla
 
-### 3) GitHub Web'den Release Oluştur
+1. [Releases > Draft a new release](https://github.com/ScamEmre/FreeCaption/releases/new) sayfasını aç
+2. **Choose a tag:** `v1.1.2`
+3. **Release title:** örn. `v1.1.2: Kurulum düzeltmesi ve tek tık KUR.bat`
+4. **Description:** hazır metin için `dist\RELEASE_NOTES_v1.1.2.md` dosyasını kullan (CHANGELOG'dan kullanıcı diline çevrilmiş hali)
+5. **Attach binaries:** `dist\FreeCaption-v1.1.2.zip` dosyasını sürükle bırak
+6. **Set as the latest release** kutusunu işaretle
+7. **Publish release**
 
-1. https://github.com/ScamEmre/FreeCaption/releases/new
-2. **Choose a tag**: `v1.0.0` (yukarıda oluşturduğun tag)
-3. **Target**: `main` (default)
-4. **Release title**: `v1.0.0 — İlk Kararlı Sürüm`
-5. **Description**: aşağıdaki şablonu kopyala/yapıştır:
+## 5) Yayından sonra
 
-```markdown
-# 🎉 FreeCaption v1.0.0 — İlk Kararlı Sürüm
+- [ ] Release sayfasında zip'in indiğini kontrol et
+- [ ] Sitede indirme bağlantısını yeni zip'e çevir
+- [ ] VDS kullanıyorsan sunucuyu güncelle: [RUNBOOK, Güncelleme](../RUNBOOK.md#guncelleme)
+- [ ] README'deki sürüm rozetini ve `CHANGELOG.md`'yi kontrol et
 
-Premiere Pro için **açık kaynak Türkçe Whisper altyazı eklentisi**. Sıfırdan ücretsiz, yerel, sınırsız.
+## 🔢 Sürüm numarası
 
-## 📦 Kurulum
+[Semantic Versioning](https://semver.org/lang/tr/):
 
-**Lokal (kendi bilgisayarında çalıştır):**
-```
-git clone https://github.com/ScamEmre/FreeCaption.git
-cd FreeCaption
-# install.bat — Python + FFmpeg + Whisper otomatik kurar
-cep_kur.bat   # plugin'i Premiere'e bağlar
-```
+| Değişiklik | Örnek |
+|---|---|
+| Hata düzeltmesi, kurulum iyileştirmesi | 1.1.1 → **1.1.2** |
+| Geriye uyumlu yeni özellik | 1.1.2 → **1.2.0** |
+| Uyumsuzluk getiren değişiklik | 1.2.0 → **2.0.0** |
 
-**Windows VDS (ekip için merkezi sunucu):**
-```
-Set-ExecutionPolicy -Scope Process Bypass -Force
-$u = "https://raw.githubusercontent.com/ScamEmre/FreeCaption/HEAD/deploy/windows/install_windows.ps1"
-Invoke-WebRequest $u -OutFile "$env:TEMP\install.ps1" -UseBasicParsing
-& "$env:TEMP\install.ps1"
-```
+## 🔁 Yanlış yayınladıysan
 
-Detay: [README.md](https://github.com/ScamEmre/FreeCaption/blob/main/README.md) · [VDS Kılavuzu](https://github.com/ScamEmre/FreeCaption/blob/main/01_Rehberler_ve_Raporlar/VDS_DEPLOYMENT.md)
+- **Zip'te hata var:** release sayfasında **Edit**, eski zip'i sil, yenisini yükle. Tag'e dokunma.
+- **Tag yanlış commit'te:** release'i **Draft**'a al, `git tag -d v1.1.2` ve `git push origin :refs/tags/v1.1.2` ile etiketi sil, doğru commit'te yeniden oluştur.
 
-## 🚀 Öne Çıkanlar
-
-- **Whisper large-v3 + WhisperX** word-level alignment (±20ms hassasiyet)
-- **CPU & GPU desteği** (RTX 50/40/30 + NVIDIA CUDA 12.8)
-- **Premiere CEP eklentisi**: Tab 1 (Oluştur) + Tab 2 (Stil Ver)
-- **5 animasyon preset**: Karaoke, Fade, Pop, Type, Bounce
-- **Sistem fontları**: Premiere'in gördüğü tüm yüklü fontlar (PowerShell entegrasyonu)
-- **VDS deploy**: Windows Server 2019/2022 için tek tuş install (Caddy + NSSM + Auto-HTTPS)
-- **Auto-update**: Plugin GitHub'tan kendini günceller (🔄 butonu)
-
-## 📝 Tam Değişiklik Listesi
-
-[CHANGELOG.md](https://github.com/ScamEmre/FreeCaption/blob/main/CHANGELOG.md)
-
-## 📥 İndirilebilir Dosyalar
-
-- `FreeCaption-plugin-v1.0.0.zip` — Sadece CEP eklenti paketi (Premiere'e manuel kurulum için).
-  Lokal kurulum için: `%APPDATA%\Adobe\CEP\extensions\FreeCaption\` klasörüne çıkar.
-- **Source code (zip/tar.gz)** — Tüm proje (otomatik GitHub'tan)
-
-## 🌐 Web
-
-- Tanıtım: https://emrekazak.com/freecaption
-- GitHub: https://github.com/ScamEmre/FreeCaption
-- Sorun bildir: https://github.com/ScamEmre/FreeCaption/issues
-
-## 🙏 Teşekkürler
-
-- OpenAI Whisper ekibi
-- SYSTRAN faster-whisper
-- m-bain/WhisperX
-- OpenNMT CTranslate2
-- Türk video editör topluluğu
-
----
-
-**Not**: VDS deploy henüz Linux'ta test edilmedi; Windows Server üzerinde production-ready. Linux test/PR'lara açığız.
-```
-
-6. **Attach binaries**: `dist/FreeCaption-plugin-v1.0.0.zip` dosyasını sürükle-bırak veya **"Attach binaries"** butonuyla yükle
-7. **Set as the latest release** ✓ (en güncel sürüm)
-8. **Publish release** mavi butonu
-
-### 4) Doğrulama
-
-- Tarayıcıdan: https://github.com/ScamEmre/FreeCaption/releases
-- v1.0.0 release görünmeli, ZIP indirilebilir olmalı
-- README'deki badge'ler güncellenir (varsa)
-
-## Sonraki Release'lar İçin Otomatik Script (Yapılacak)
-
-Sürüm yayın otomatik hale getirmek için `gh` CLI gerekir:
-
-```powershell
-# winget install GitHub.cli
-gh auth login
-
-# Sürüm scripti (örnek):
-$VERSION = "1.1.0"
-git tag -a "v$VERSION" -m "v$VERSION"
-git push origin "v$VERSION"
-Compress-Archive -Path cep-plugin\* -DestinationPath "dist\FreeCaption-plugin-v$VERSION.zip" -Force
-gh release create "v$VERSION" `
-  --title "v$VERSION" `
-  --notes-file "RELEASE_NOTES.md" `
-  "dist\FreeCaption-plugin-v$VERSION.zip"
-```
-
-Bu script `.github/workflows/release.yml` olarak otomatize edilebilir (push to tag → auto release).
-
-## Sürüm Numaralandırma (Semver)
-
-- **1.0.0 → 1.0.1**: Hata düzeltmesi
-- **1.0.0 → 1.1.0**: Yeni özellik (eski plugin'ler çalışmaya devam eder)
-- **1.0.0 → 2.0.0**: Geriye dönük uyumsuz değişiklik (API/UI breaking)
-
-İlk önce **GitHub Desktop'tan push** ile tüm commit'ler ve tag origin'e gönderilmeli, sonra Releases sayfasından yayın.
+☕ FreeCaption ücretsiz ve açık kaynak: [Buy Me a Coffee](https://buymeacoffee.com/emrekazak)
