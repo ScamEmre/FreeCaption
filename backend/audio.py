@@ -90,7 +90,9 @@ for pkg_name in ("nvidia.cudnn", "nvidia.cublas", "nvidia.cuda_nvrtc", "nvidia.c
                 cand = os.path.join(pkg_dir, sub)
                 _add_to_path(cand)
     except Exception as _e:
-        print(f"[FreeCaption] {pkg_name} eklenmedi: {_e}")
+        # torch cu128 DLL'leri kendi icinde tasir; bu paketler zorunlu degil -> sessiz (FC_DEBUG=1 ile goster)
+        if os.environ.get("FC_DEBUG") == "1":
+            print(f"[FreeCaption] {pkg_name} eklenmedi: {_e}")
 
 
 def extract_audio(
