@@ -6,32 +6,63 @@
 
 **Adobe Premiere Pro için açık kaynak, yerel, sınırsız Türkçe & İngilizce otomatik altyazı eklentisi**
 
-[![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-1.1.2-2ea44f)](CHANGELOG.md)
+[![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-1.1.3-2ea44f)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.md)
-[![Premiere Pro](https://img.shields.io/badge/Premiere%20Pro-23%E2%80%9327-9999ff)](#kurulum)
-[![GPU](https://img.shields.io/badge/CUDA-NVIDIA%20RTX-76b900)](#sistem-gereksinimleri)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-555555)](#kurulum)
-[![Windows VDS](https://img.shields.io/badge/VDS-Windows%20Ready-06b6d4)](#-uzak-sunucu-vds-kurulumu--opsiyonel)
+[![Premiere Pro](https://img.shields.io/badge/Premiere%20Pro-23%E2%80%9327-9999ff)](#nasil-kurulur)
+[![GPU](https://img.shields.io/badge/CUDA-NVIDIA%20RTX-76b900)](#gereksinimler)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-555555)](#nasil-kurulur)
+[![Windows VDS](https://img.shields.io/badge/VDS-Windows%20Ready-06b6d4)](#uzak-sunucu)
 [![Made in Türkiye](https://img.shields.io/badge/Made%20in-T%C3%BCrkiye-e30a17)](#)
 [![Kahve ısmarla](https://img.shields.io/badge/Kahve%20%C4%B1smarla-destek-FFDD00?logo=buymeacoffee&logoColor=000000)](https://buymeacoffee.com/emrekazak)
 
 *Konuşmayı kelime kelime altyazıya çevirir. Bilgisayarında çalışır, videon dışarı çıkmaz.*
 
-[🌐 Tanıtım](landing/index.html) · [🚀 Kurulum Rehberi](KURULUM_REHBERI.md) · [Kurulum özeti](#kurulum) · [Nasıl Çalışır](#nasıl-çalışır) · [VDS Kurulumu](#-uzak-sunucu-vds-kurulumu--opsiyonel) · [🛠 Runbook (Sorun Giderme)](RUNBOOK.md) · [SSS](#sss) · [Geliştirici](#geliştirici)
+[🌐 Tanıtım](landing/index.html) · [🚀 Nasıl kurulur](#nasil-kurulur) · [🎬 Nasıl kullanılır](#nasil-kullanilir) · [❓ SSS](#sss) · [🆘 Takıldım](#takildim) · [🧑‍💻 Geliştiriciler](#gelistiriciler)
 
 </div>
 
 ---
 
+<a id="nedir"></a>
+
+## 👋 FreeCaption nedir?
+
+Premiere Pro'da videodaki konuşmayı dinleyip **Türkçe altyazıyı kendisi yazan** ücretsiz bir eklenti. Tek tuşla altyazıyı zaman çizelgesine yerleştirir. Videon internete yüklenmez, her şey **kendi bilgisayarında** olur.
+
 > ☕ FreeCaption ücretsiz ve açık kaynak. İşine yaradıysa bir [kahve ısmarlayabilirsin](https://buymeacoffee.com/emrekazak). Zorunlu değil, geliştirmeye ayrılan zamanı destekler.
 
-> 🆕 **v1.1.2 (8 Ekim 2026):** Kurulum bazı bilgisayarlarda "Python kontrol ediliyor" satırında sessizce duruyordu. Düzeltildi. Artık tek dosya yetiyor: **`KUR.bat`**. [Ayrıntılar](CHANGELOG.md)
+> 🆕 **v1.1.3 (8 Ekim 2026):** Kurulum bazı bilgisayarlarda "Python kontrol ediliyor" satırında sessizce duruyordu, düzeltildi. Artık tek dosya yetiyor: **`KUR.bat`**. [Neler değişti?](CHANGELOG.md)
 
-## Neden FreeCaption?
+---
 
-Premiere Pro'da Türkçe altyazıyı elle yazmak saatler alır. Premiere'in kendi konuşma-metin özelliği Türkçede işe yaramıyor, ücretli eklentiler ise aylık abonelik ister ve videonu internete yükler.
+<a id="nasil-kurulur"></a>
 
-FreeCaption bu işi **ücretsiz, açık kaynak ve tamamen kendi bilgisayarında** yapar.
+## 🚀 Nasıl kurulur? (3 adım)
+
+**⬇ [FreeCaption'ı indir (son sürüm)](https://github.com/ScamEmre/FreeCaption/releases/latest)** sayfasından `FreeCaption-v1.1.3.zip` dosyasını al.
+
+1. **Zip'i klasöre çıkar.** Dosyaya sağ tıkla, **Tümünü ayıkla**. Klasör olarak `C:\FreeCaption` iyi bir seçim. Zip'in içinden çalıştırma, önce çıkar.
+2. **`KUR.bat` dosyasına çift tıkla.** Mavi "Windows korumalı" ekranı çıkarsa **Ek bilgi**, sonra **Yine de çalıştır** de. Siyah pencere kendi kendine ilerler (10-25 dakika). Pencereyi kapatma, **"HER SEY HAZIR!"** yazısını bekle.
+3. **Premiere Pro'yu kapatıp yeniden aç.** Üst menüden **Window > Extensions > FreeCaption** paneli açılır. Menüde yoksa **Extensions (Legacy)** altına bak: Adobe, bu tür paneli Premiere 2026'da oraya koyabiliyor.
+
+Hepsi bu. Python, FFmpeg ve yapay zeka bileşenleri kurulumda **otomatik** yüklenir, senin bir şey indirmene gerek yok.
+
+📖 Resimsiz ama adım adım, ekranda çıkan her hata mesajının çözümüyle: **[Kurulum Rehberi](KURULUM_REHBERI.md)** (tarayıcıda okumak için `KURULUM_REHBERI.html`).
+
+---
+
+<a id="neler-yapar"></a>
+
+## ✨ Neler yapabiliyor?
+
+- 🎯 **Kelime kelime senkron:** Altyazı, konuşmayla tam zamanında çıkar
+- 🇹🇷 **Türkçe ve İngilizce** (ve 99 dil), dili kendisi tanıyabilir
+- 🔒 **Videon bilgisayarında kalır:** Hiçbir yere yüklenmez
+- ♾️ **Sınırsız ve ücretsiz:** Aylık limit, dosya boyutu sınırı, abonelik yok
+- 🎨 **Tek satır altyazı:** Karakter sınırını sen seçersin, Premiere'de iki satıra taşmaz
+- 📥 **Otomatik yerleştirme:** Altyazı kanalı yoksa oluşturur, altyazıyı oraya koyar
+- 🚀 **Hızlı:** NVIDIA ekran kartı varsa çok hızlı. Yoksa daha yavaş ama yine çalışır
+- 🧰 **Tek tık kurulum:** `KUR.bat` her şeyi kendisi halleder
 
 | | FreeCaption | Ücretli bulut eklentileri | Premiere yerleşik |
 |---|:---:|:---:|:---:|
@@ -41,47 +72,88 @@ FreeCaption bu işi **ücretsiz, açık kaynak ve tamamen kendi bilgisayarında*
 | Ücret | **Ücretsiz** | Abonelik | Creative Cloud içinde |
 | Dosya boyutu limiti | Yok | Var | Var |
 | Kelime kelime senkron | ✅ | Değişir | ❌ |
-| Aylık kullanım limiti | Yok | Kotalı | Sınırlı |
 
 ---
 
-## Özellikler
+<a id="nasil-kullanilir"></a>
 
-- 🎯 **Word-level alignment** — Whisper large-v3 + WhisperX forced alignment ile ±20ms hassasiyet
-- 🇹🇷 **Türkçe & İngilizce** + otomatik dil tespit (97 dil destekli teknoloji)
-- 🚀 **GPU hızlandırma** — NVIDIA RTX 20/30/40/50 serisi (CUDA 12.8). GPU yoksa CPU ile de çalışır
-- 🔒 **Tamamen yerel** — videolarınız sunucuya gönderilmez, gizliliğiniz korunur
-- ♾️ **Sınırsız kullanım** — hiçbir API kotası, aylık limit, dosya boyutu sınırı yok
-- 🎨 **Tek satır altyazı** — karakter sınırı + akıllı tolerans, Premiere'de 2 satıra wrap olmaz
-- 📥 **Otomatik timeline entegrasyonu** — caption track yoksa oluşturur, SRT'yi yerleştirir
-- ⚡ **İstersen sessiz arka plan** — `autostart_kur.bat` ile bilgisayar açılınca kendiliğinden başlar, pencere açılmaz
-- 🧰 **Tek tık kurulum** — `KUR.bat` Python'u, bileşenleri, FFmpeg'i ve paneli kendisi kurar
+## 🎬 Nasıl kullanılır?
+
+1. **Sunucuyu aç.** `KUR.bat` bittiğinde kendiliğinden açılır. Sonraki günlerde bilgisayarı açınca `C:\FreeCaption` içindeki **`start.bat`**'a çift tıkla. Açılan siyah pencere **açık kalsın** (küçültebilirsin).
+2. Premiere'de **Window > Extensions > FreeCaption** panelini aç.
+3. Panelin üstünde **"GPU: ..."** ya da **"CPU modu"** yazıyorsa her şey hazır. **"Sunucu kapalı"** yazıyorsa panelden **Sunucu Başlat**'a bas ya da `start.bat`'ı çalıştır.
+4. Zaman çizelgesinde altyazısını istediğin klibe tıkla (ses ya da video).
+5. **Karakter sınırını** seç. 25 dengeli, tek satırlık bir seçim. 20 kısa videolar (Reels, TikTok) için. 30 ve üstü büyük yazıda iki satıra taşabilir.
+6. **Altyazı Üret** düğmesine bas. Altyazı kısa süre sonra otomatik olarak altyazı kanalına yerleşir.
+
+> 💡 **İlk deneme için** 30 saniyelik kısa bir klip seç. İlk altyazıda yapay zeka modeli bir kereliğine indirilir, bu yüzden biraz bekleyebilir.
+
+**Her açılışta kendiliğinden başlasın istersen:** `autostart_kur.bat` dosyasına bir kez çift tıkla. Geri almak için `Win+R` yaz, `shell:startup` yaz, açılan klasörde FreeCaption kısayolunu sil.
+
+**Premiere olmadan da kullanabilirsin:** Sunucu açıkken tarayıcıda **http://127.0.0.1:7860** adresini aç, videoyu sürükle bırak, altyazı dosyasını (SRT) indir.
 
 ---
 
-## Kurulum
+<a id="gereksinimler"></a>
 
-> **Teknik bilgin yoksa:** adım adım, ekran mesajlarıyla birlikte hazırlanmış **[Kurulum Rehberi](KURULUM_REHBERI.md)** dosyasını izle. Aşağıdaki özet, rehberin kısa halidir.
+## 📋 Bilgisayarında bunlar olmalı
 
-### Sistem Gereksinimleri
-
-- **Windows 10/11, 64 bit** (yerel sunucu) **veya macOS** (panel istemcisi — uzak VDS sunucusuna bağlanır)
-- **Adobe Premiere Pro 2023 (23.0) ve üstü** — 2026 (26.x) dahil. Windows ve macOS
+- **Windows 10 veya 11** (64 bit)
+- **Adobe Premiere Pro 2023 (23.0) ve üstü**, 2026 (26.x) dahil
 - **En az 8 GB boş disk alanı** ve kurulum sırasında internet
-- **Python 3.10-3.12** — yoksa `install.bat` Python 3.12'yi kendisi kurar, elle kurman gerekmez
-- **FFmpeg** — kurulum sırasında otomatik yüklenir
-- **NVIDIA GPU (opsiyonel ama önerilen)** — RTX 20/30/40/50 serisi
-  - GPU varsa **GPU modu**: hızlı, `large-v3` modeli, kelime kelime senkron
-  - GPU yoksa (ya da sürücü eskiyse) **CPU modu**: 5-10x daha yavaş, `medium` modeli; yine de çalışır. Mod kurulumda otomatik seçilir.
+- **NVIDIA ekran kartı şart değil.** Varsa altyazı çok daha hızlı üretilir (RTX 20/30/40/50 serisi). Yoksa **CPU modu** kullanılır: 5-10 kat daha yavaş ama çalışır. Hangisinin kullanılacağını kurulum kendisi seçer.
+- Python ve FFmpeg'i **kendin kurmana gerek yok**, kurulum halleder.
+- **Mac kullanıyorsan:** Mac'te yerel sunucu çalışmıyor. Paneli kurup uzak bir sunucuya bağlanabilirsin, ayrıntı aşağıdaki [Geliştiriciler](#gelistiriciler) bölümünde.
 
-### En kolay yol: KUR.bat
+---
 
-1. Zip'i **önce klasöre çıkar** (sağ tık → *Tümünü ayıkla*). Klasör `C:\FreeCaption` gibi sade olsun: yolda Türkçe karakter ve OneDrive olmasın. Zip'in içinden çalıştırma.
-2. **`KUR.bat`** dosyasına çift tıkla. Windows "Bilinmeyen yayımcı" ekranı çıkarırsa *Ek bilgi → Yine de çalıştır*.
-3. Sunucu kurulumu, Premiere paneli ve sunucu başlatma sırayla otomatik yapılır (10-25 dk). **"HER SEY HAZIR!"** yazısını bekle.
-4. Premiere Pro'yu kapatıp yeniden aç → **Window → Extensions → FreeCaption**. Premiere 2026'da paneller **Extensions (Legacy)** başlığı altında da görünebilir, orada ara.
+<a id="sss"></a>
 
-Ayrıntılar ve ekranda görülen hata mesajlarının çözümleri: **[KURULUM_REHBERI.md](KURULUM_REHBERI.md)** (tarayıcıda okumak için `KURULUM_REHBERI.html`).
+## ❓ Sık sorulan sorular
+
+**Videolarım bir yere yükleniyor mu?**
+Hayır. Her şey bilgisayarında olur. İnternet yalnızca kurulumda ve ilk model indirmesinde gerekir.
+
+**Aylık kullanım limiti var mı?**
+Yok. Tamamen sınırsız ve ücretsiz.
+
+**Ekran kartım yok, çalışır mı?**
+Evet, CPU modunda çalışır. Sadece daha yavaştır. Ekran kartın varsa ve yine CPU modundaysa sürücünü [nvidia.com/drivers](https://www.nvidia.com/drivers) adresinden güncelle, sonra `KUR.bat`'ı yeniden çalıştır.
+
+**Kurulum takılırsa ne yapmalıyım?**
+[Kurulum Rehberi](KURULUM_REHBERI.md)'ndeki **Sorun giderme** tablosuna bak. Ekranda gördüğün mesajın çözümü orada. `KUR.bat`'ı **tekrar çalıştırmak** çoğu zaman yeter, kaldığı yerden devam eder.
+
+**Premiere kapalıyken çalışır mı?**
+Evet, tarayıcıda `http://127.0.0.1:7860` adresinde web arayüzü var.
+
+**Hangi Premiere sürümleri destekleniyor?**
+Premiere Pro 2023 (23.0) ve sonrası, 2026 (26.x) dahil. Panel 2026'da **Window > Extensions (Legacy)** altında da çıkabilir.
+
+**Adobe bu tür panelleri kaldırmıyor mu?**
+Adobe, bu panel türünü (CEP) Premiere 25.6'dan beri "eski" olarak işaretliyor ama 2026 sürümlerinde paneller hâlâ yükleniyor. Yerine gelen UXP olgunlaşınca FreeCaption'ın UXP sürümü de gelecek.
+
+**Başka diller?**
+Whisper 99 dil biliyor. Panelde dil seçimi var.
+
+**AMD ya da Intel ekran kartı?**
+Şimdilik yalnızca NVIDIA hızlanıyor. AMD desteği yol haritasında. Diğer kartlarda CPU modu kullanılır.
+
+---
+
+<a id="takildim"></a>
+
+## 🆘 Takıldım, ne yapmalıyım?
+
+1. [Kurulum Rehberi](KURULUM_REHBERI.md)'nde ekranda gördüğün hata mesajını ara, çözümü yazıyor.
+2. Olmadıysa [yeni bir konu aç](https://github.com/ScamEmre/FreeCaption/issues/new/choose) ve şunları ekle: hata ekranının görüntüsü, FreeCaption klasöründeki **`install_log.txt`** dosyası, Windows sürümün ve ekran kartın.
+
+---
+
+<a id="gelistiriciler"></a>
+
+## 🧑‍💻 Geliştiriciler ve ileri düzey
+
+Aşağısı teknik bilgisi olanlar içindir. Sıradan kullanım için yukarıdakiler yeterli.
 
 ### İleri düzey: adım adım kurulum
 
@@ -119,21 +191,21 @@ Sonra Premiere'i yeniden başlat ve **Window → Extensions → FreeCaption** me
 
 > **Veya:** Panel üzerindeki **Sunucu Başlat** butonu da sunucuyu başlatır.
 
-> **🍎 macOS notu:** Yerel Python sunucusu şu an yalnız **Windows/Linux**'ta çalışır. macOS'ta paneli kurduktan sonra **Uzak Sunucu (VDS)** moduyla bir Windows/Linux sunucusuna bağlanın (aşağıdaki [VDS Kurulumu](#-uzak-sunucu-vds-kurulumu--opsiyonel)).
+> **🍎 macOS notu:** Yerel Python sunucusu şu an yalnız **Windows/Linux**'ta çalışır. macOS'ta paneli kurduktan sonra **Uzak Sunucu (VDS)** moduyla bir Windows/Linux sunucusuna bağlanın (aşağıdaki [VDS Kurulumu](#uzak-sunucu)).
 
----
+<a id="uzak-sunucu"></a>
 
-## 🌐 Uzak Sunucu (VDS) Kurulumu — Opsiyonel
+### 🌐 Uzak Sunucu (VDS) Kurulumu — Opsiyonel
 
 Birden fazla kişi kullanacaksa veya ekibin için merkezi bir Whisper sunucusu istiyorsan: VDS'ye **tek tuşla** kur, panelden URL + API Key ile bağlan.
 
-### VDS Önkoşulları
+#### VDS Önkoşulları
 
 - Windows Server 2019/2022 (Türk VDS sağlayıcı + dedicated CPU önerilir)
 - 4+ dedicated core, 8 GB RAM, 25 GB disk
 - RDP + admin PowerShell erişimi
 
-### Tek Tuşla Kurulum (PowerShell ADMIN)
+#### Tek Tuşla Kurulum (PowerShell ADMIN)
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass -Force
@@ -153,7 +225,7 @@ Script otomatik:
 
 Toplam: ~15 dakika, sıfırdan production-ready.
 
-### Premiere Panel'i Sunucuya Bağla
+#### Premiere Panel'i Sunucuya Bağla
 
 Panel'de **⚙ Sunucu Ayarları** butonu:
 - URL: `http://<VDS_IP>` veya `https://api.YOURDOMAIN.com`
@@ -163,9 +235,7 @@ Health badge yeşil olunca tamam — transcribe artık sunucuda çalışır.
 
 > Detaylı VDS kılavuzu ve sorun giderme: [RUNBOOK.md](RUNBOOK.md#yeni-windows-11-vds-kurulumu)
 
----
-
-## Nasıl Çalışır?
+### Nasıl Çalışır?
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -199,35 +269,13 @@ Health badge yeşil olunca tamam — transcribe artık sunucuda çalışır.
        └───────────────────────────────┘
 ```
 
-### Bileşenler
+#### Bileşenler
 
 - **`backend/`** — Python FastAPI sunucusu, Whisper + WhisperX motoru
 - **`cep-plugin/`** — Premiere CEP eklentisi, ExtendScript ile timeline entegrasyonu
 - **`frontend/`** — Standalone web UI (Premiere kurulu olmasa da çalışır)
 
----
-
-## Kullanım
-
-### Premiere içinden (önerilen)
-
-1. **Window → Extensions → FreeCaption** panelini aç
-2. Timeline'da bir klibe tıkla (ses ya da video, fark etmez)
-3. Panelin üstündeki durum yazısına bak: **"GPU: NVIDIA ..."** ya da **"CPU modu"** görüyorsan sunucu hazır. **"Sunucu kapalı"** yazıyorsa panelden **Sunucu Başlat**'a bas ya da `start.bat`'ı çalıştır
-4. **Karakter sınırı** seç:
-   - **20** — TikTok/Reels tarzı çok kısa altyazılar (tek satır kesin)
-   - **25** — Dengeli (önerilen, tek satır)
-   - **30+** — Geniş, ama büyük font'ta 2 satıra wrap olabilir
-5. **Altyazı Üret** tuşuna bas
-6. GPU'da 10-30 saniye sonra altyazı **otomatik olarak caption track'e** düşer
-
-### Premiere'siz (standalone web UI)
-
-`start_hidden.vbs` çalışırken tarayıcıda **http://127.0.0.1:7860** aç. Drag&drop ile video/ses dosyası, SRT indir.
-
----
-
-## Performans
+### Performans
 
 | Senaryo | RTX 4060+ | RTX 3060 | CPU (i5-12400) |
 |---|:---:|:---:|:---:|
@@ -237,43 +285,13 @@ Health badge yeşil olunca tamam — transcribe artık sunucuda çalışır.
 
 İlk altyazıda Whisper modeli indirilir (GPU modunda yaklaşık 3 GB, CPU modunda daha küçük). Bu **bir kerelik**. Süreler yaklaşıktır, bilgisayarına göre değişir.
 
----
-
-## SSS
-
-**S: Videolarım bir yere upload mu ediliyor?**
-A: Hayır. Tüm işlem bilgisayarında yapılır. İnternet bağlantısı yalnızca ilk Whisper modelini indirmek için gerekir.
-
-**S: Aylık kullanım limiti var mı?**
-A: Yok. Tamamen sınırsız.
-
-**S: Premiere kapalıyken çalışır mı?**
-A: Evet, `http://127.0.0.1:7860` adresinde web UI var. Drag&drop ile SRT üret.
-
-**S: Hangi Premiere sürümleri desteklenir?**
-A: Premiere Pro 2023 (23.0) ve sonrası, 2026 (26.x) dahil. Panel, Premiere 2026'da Window → Extensions (Legacy) altında da çıkabilir.
-
-**S: AMD/Intel GPU desteği?**
-A: Şu an sadece NVIDIA CUDA. AMD ROCm desteği yol haritasında.
-
-**S: Adobe bu tür panelleri (CEP) kaldırmıyor mu?**
-A: Adobe, CEP'i Premiere 25.6'dan beri "eski" olarak işaretliyor ama 2026 sürümlerinde paneller hâlâ yükleniyor. Yerine gelen UXP olgunlaşınca FreeCaption'ın UXP sürümü de gelecek. Yol haritasında.
-
-**S: Başka diller?**
-A: Whisper 99 dil biliyor. Panelde dil seçimi var; ayrıca API'ye `language` parametresiyle istediğin dili verebilirsin.
-
-**S: Kurulum takılırsa ne yapmalıyım?**
-A: [Kurulum Rehberi](KURULUM_REHBERI.md)'ndeki **Sorun giderme** tablosuna bak: ekranda gördüğün mesajın çözümü orada. Çözülmezse ekran görüntüsü ve `install_log.txt` dosyasıyla [issue aç](https://github.com/ScamEmre/FreeCaption/issues).
-
----
-
-## Geliştirici
+### Geliştirici
 
 **Emre Kazak** — [emrekazak.com](https://emrekazak.com) · [GitHub](https://github.com/emrekazak)
 
 Premiere'de Türkçe altyazı için ücretli ve kapalı kaynak çözümler Türk video editörlerine pahalıya geliyordu. FreeCaption, bunun yerine **açık kaynak, yerel ve sınırsız** bir seçenek olsun diye başladı.
 
-### Katkıda Bulunanlar
+#### Katkıda Bulunanlar
 
 Projeyi daha iyi hale getiren herkese teşekkürler 🙏
 
@@ -281,13 +299,13 @@ Projeyi daha iyi hale getiren herkese teşekkürler 🙏
 
 ---
 
-## Katkıda Bulun
+### Katkıda Bulun
 
 Pull request'ler memnuniyetle karşılanır. Büyük değişiklikler için önce bir [issue](https://github.com/ScamEmre/FreeCaption/issues) açıp konuşalım.
 
 Detaylı rehber: [CONTRIBUTING.md](CONTRIBUTING.md) · Değişiklik geçmişi: [CHANGELOG.md](CHANGELOG.md) · Sorun giderme + yeni VDS kurulum: [RUNBOOK.md](RUNBOOK.md)
 
-### Roadmap
+#### Roadmap
 
 - [x] **macOS Premiere desteği** (CEP panel + VDS modu) — [@CeroWalker](https://github.com/CeroWalker) katkısı 🎉
 - [ ] AMD GPU (ROCm) desteği
@@ -297,9 +315,7 @@ Detaylı rehber: [CONTRIBUTING.md](CONTRIBUTING.md) · Değişiklik geçmişi: [
 - [ ] Konfigürasyon paneli (özel modeller, custom prompts)
 - [ ] UXP sürümü (Adobe'nin UXP caption API'si olgunlaşınca)
 
----
-
-## Teşekkürler
+### Teşekkürler
 
 Bu proje şu açık kaynak araçlar üzerine inşa edildi:
 
@@ -310,9 +326,7 @@ Bu proje şu açık kaynak araçlar üzerine inşa edildi:
 - [PyTorch](https://pytorch.org/) — model çalıştırma motoru
 - [FastAPI](https://fastapi.tiangolo.com/) — Python web framework
 
----
-
-## Lisans
+### Lisans
 
 [MIT](LICENSE.md) — özgürce kullan, değiştir, dağıt. Sadece telif bildirimini koru.
 
