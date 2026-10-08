@@ -12,6 +12,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-555555)](#kurulum)
 [![Windows VDS](https://img.shields.io/badge/VDS-Windows%20Ready-06b6d4)](#-uzak-sunucu-vds-kurulumu--opsiyonel)
 [![Made in Türkiye](https://img.shields.io/badge/Made%20in-T%C3%BCrkiye-e30a17)](#)
+[![Kahve ısmarla](https://img.shields.io/badge/Kahve%20%C4%B1smarla-destek-FFDD00?logo=buymeacoffee&logoColor=000000)](https://buymeacoffee.com/emrekazak)
 
 *Sesi kelime kelime altyazıya çevir — saniyeler içinde, GPU ile, gizliliği koruyarak.*
 
@@ -20,6 +21,8 @@
 </div>
 
 ---
+
+> ☕ FreeCaption ücretsiz ve açık kaynak. İşine yaradıysa bir [kahve ısmarlayabilirsin](https://buymeacoffee.com/emrekazak); zorunlu değil, geliştirmeye ayrılan zamanı destekler.
 
 ## Neden FreeCaption?
 
