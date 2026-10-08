@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: 📖 Kurulum Sorunu / Dokümantasyon
-    url: https://github.com/ScamEmre/FreeCaption/blob/main/README.md
-    about: Önce README ve VDS_DEPLOYMENT.md kılavuzlarına bak — çoğu sorun burada çözülmüş.
+    url: https://github.com/ScamEmre/FreeCaption/blob/main/KURULUM_REHBERI.md
+    about: Önce Kurulum Rehberi'ndeki Sorun giderme tablosuna bak. Ekranda gördüğün mesajın çözümü çoğunlukla orada.
   - name: 💬 Genel Soru / Tartışma
     url: https://github.com/ScamEmre/FreeCaption/discussions
     about: Issue açmadan önce genel bir tartışma başlatmak istersen Discussions kullan.
