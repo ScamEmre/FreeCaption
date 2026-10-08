@@ -1,142 +1,94 @@
-# FreeCaption Runbook — Sorun Giderme + Kurulum Kılavuzu
+# 🛠️ FreeCaption Runbook
 
-> **Bu doküman ne zaman?** Bir sorun yaşadığında veya yeni bir Windows VDS'ye geçişte adım adım rehber. Tüm komutlar **kopyala-yapıştır** çalışır.
+Sorun giderme ve sunucu işletme kılavuzu. Sürüm **1.1.2**, son güncelleme **8 Ekim 2026**.
+
+> **Ne zaman açmalı?** Kendi bilgisayarındaki kurulum takıldığında, panel Premiere'de görünmediğinde ya da ekip için bir Windows VDS kurarken. Komutlar kopyala-yapıştır çalışır.
+>
+> Teknik bilgin yoksa önce **[Kurulum Rehberi](KURULUM_REHBERI.md)**'ne bak. Orada ekrandaki her hata mesajının çözümü var.
 
 ## İçindekiler
 
-1. [✅ Sıradaki Adımım — Hızlı Kontrol Listesi](#siradaki-adim)
-2. [🚨 ACİL — "Bir Şey Bozuk, Hemen Düzeltmek İstiyorum"](#acil)
-3. [🆕 Yeni Windows 11 VDS Kurulumu (Sıfırdan)](#yeni-windows-11-vds-kurulumu)
-4. [🔄 Eski Sunucudan Yeni VDS'ye Geçiş](#migration)
-5. [📦 Plugin/Backend Güncelleme + Yeni Release Yayınlama](#guncelleme)
-6. [🛠️ Tipik Sorunlar ve Çözümleri](#tipik-sorunlar)
-7. [📊 Sağlık Kontrolleri](#saglik-kontrolleri)
-8. [📚 Komut Hatırlatıcı](#komut-hatirlatici)
+1. [✅ Hızlı Yönlendirme](#siradaki-adim)
+2. [💻 Yerel Kurulum (Windows PC)](#yerel-kurulum)
+3. [🚨 ACİL — "Bir Şey Bozuk"](#acil)
+4. [🆕 Yeni Windows 11 VDS Kurulumu](#yeni-windows-11-vds-kurulumu)
+5. [🔄 Eski Sunucudan Yeni VDS'ye Geçiş](#migration)
+6. [📦 Güncelleme + Yeni Release Yayınlama](#guncelleme)
+7. [🧰 Tipik VDS Sorunları](#tipik-sorunlar)
+8. [📊 Sağlık Kontrolleri](#saglik-kontrolleri)
+9. [📚 Komut Hatırlatıcı](#komut-hatirlatici)
 
 ---
 
-## ✅ Sıradaki Adımım — Hızlı Kontrol Listesi {#siradaki-adim}
+## ✅ Hızlı Yönlendirme {#siradaki-adim}
 
-Aşağıdaki sırayla işle. Her madde tamamlandıkça [x] yap.
+| Durumun | Git |
+|---|---|
+| Kendi bilgisayarımda kurulum takıldı ya da hata verdi | [💻 Yerel Kurulum](#yerel-kurulum) |
+| Panel Premiere'de yok ya da "Sunucu kapalı" yazıyor | [🚨 ACİL](#acil) |
+| Ekip için merkezi sunucu (VDS) kurmak istiyorum | [🆕 Yeni VDS Kurulumu](#yeni-windows-11-vds-kurulumu) |
+| Kodu değiştirdim, yeni sürüm yayınlayacağım | [📦 Güncelleme](#guncelleme) |
 
-### Bugün (mevcut Server VDS çalışıyor)
+### VDS için önerilen özellikler
 
-- [x] Plugin AppData'da güncel (font combobox + tüm fix'ler dahil)
-- [x] VDS canlı (`191.44.68.233`)
-- [ ] **Sen şu an**: video çek, dokunma ✓
+- **İşletim sistemi:** Windows 11 Pro x64 (ya da Windows Server 2019/2022)
+- **İşlemci:** en az 4 vCPU, **ayrılmış** (paylaşımlı vCPU yavaş kalır)
+- **Bellek:** 8 GB
+- **Disk:** 25-50 GB NVMe SSD
+- **Konum:** Türkiye (düşük gecikme)
 
-### Yarın — Yeni Windows 11 VDS Kurulumu (~30 dk toplam)
-
-#### A) Sunucu Satın Alma (5 dk)
-
-- [ ] TR VDS provider'a git (ucuz Win 11 VDS satan)
-- [ ] Önerilen spec:
-  - **OS**: Windows 11 Pro x64
-  - **CPU**: Min 4 vCPU **dedicated** (vCPU paylaşımlı OLMAZ)
-  - **RAM**: 8 GB DDR4
-  - **Disk**: 25-50 GB NVMe SSD
-  - **Network**: 10 Gbit (genelde Türk provider'larda var)
-  - **Lokasyon**: TR (düşük ping)
-- [ ] Satın al → email/SMS'ten RDP bilgileri gelir (IP + user + şifre)
-
-#### B) RDP ile Bağlan (2 dk)
-
-- [ ] Lokal makinende **Win+R** → `mstsc` → Enter
-- [ ] **Computer**: `<YENI_VDS_IP>`
-- [ ] **Show Options** → **User name**: `Administrator`
-- [ ] **Connect** → şifre → **Yes** (sertifika uyarısı)
-- [ ] VDS masaüstü açılır
-
-#### C) FreeCaption Tek Tuş Kurulum (15 dk otomatik)
-
-- [ ] VDS masaüstünde Start → "powershell" yaz → **Windows PowerShell** sağ tık → **Run as administrator**
-- [ ] UAC uyarısı → **Yes**
-- [ ] Mavi PowerShell penceresine **sırayla şu 4 satırı yapıştır + Enter**:
-
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass -Force
-```
-
-```powershell
-$url = "https://raw.githubusercontent.com/ScamEmre/FreeCaption/main/deploy/windows/install_windows.ps1"
-```
-
-```powershell
-Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\install.ps1" -UseBasicParsing
-```
-
-```powershell
-& "$env:TEMP\install.ps1"
-```
-
-- [ ] Script başlar. 15 adım otomatik ilerler (~15 dk).
-- [ ] **🟡 Adım 9'da SARI KUTU** ile API Key ekrana çıkar — **HEMEN KOPYALA** (Notepad'e yapıştır):
-  ```
-  API Key: ?_____________________________________
-  ```
-- [ ] **🟡 Adım 10'da "Domain..." sorusu** çıkar → **boş bırak, Enter** (şimdilik IP modu HTTP)
-- [ ] **Adım 14**: Whisper modeli indirme — 3-5 dk bekle, hata değil
-- [ ] Adım 15 → KURULUM TAMAM mesajı
-
-#### D) Sunucu Doğrulama (2 dk)
-
-Aynı PowerShell'de:
-
-```powershell
-Get-Service FreeCaption, FreeCaptionCaddy | Format-Table Name, Status
-```
-- [ ] İki satır da **Running** olmalı
-
-```powershell
-(Invoke-WebRequest "http://127.0.0.1:7860/api/health" -UseBasicParsing).Content
-```
-- [ ] Çıktı: `{"ok":true,"gpu":false,...}` görmeli
-
-```powershell
-$ip = (Invoke-WebRequest "https://api.ipify.org" -UseBasicParsing).Content; "Yeni VDS IP: $ip"
-```
-- [ ] **IP'yi not al**: ?_____________________________________
-
-#### E) Premiere Panel'i Yeni Sunucuya Bağla (2 dk)
-
-Lokal makinende:
-
-- [ ] Premiere açık → Window → Extensions → FreeCaption
-- [ ] Topbar'da **⚙ butonu** → tıkla
-- [ ] **İlk prompt — URL**: `http://<YENI_IP>` (sadece IP yaz, http:// otomatik eklenir ama yazsan da olur)
-- [ ] **İkinci prompt — API Key**: Notepad'e kaydettiğin değeri yapıştır
-- [ ] Toast: "Ayarlar kaydedildi" görünür
-- [ ] 5 saniye içinde sağ üstte **health badge yeşil "CPU modu"** olmalı ✓
-
-#### F) Test Transcript (1-2 dk)
-
-- [ ] Premiere'de bir test klibi seç (10-30 sn ses)
-- [ ] Tab 1 → Altyazı Üret butonuna bas
-- [ ] Beklenen akış:
-  ```
-  Ses cikariliyor (FFmpeg)…           ← 5-10 sn
-  WAV yukleniyor (X MB)…              ← 5-15 sn
-  Model yukleniyor…                    ← 3 sn (cache'ten)
-  Transkripsiyon (medium)…             ← ~30 sn
-  Tamamlandi
-  ```
-- [ ] Caption track timeline'a düşmeli ✓
-
-#### G) Eski Sunucuyu Kapat (sonra, 1-2 hafta sonra)
-
-- [ ] Yeni sunucu 1 hafta sorunsuz çalıştıysa
-- [ ] Eski TR provider abonelik panelinden iptal et
-- [ ] Lokal `localStorage.fc_api_url` zaten yeni IP'de, dokunma gerek yok
-
-### Yarın Sonrası — Plugin/Kod Güncellemesi (haftalık)
-
-#### H) Kod değişikliği yaptın → yeni release çıkar
-
-- [ ] Lokal'de değişiklikleri test et (Premiere'de plugin çalıştığını gör)
-- [ ] GitHub Desktop'tan **commit + push**
-- [ ] Plugin değişikliği varsa **yeni ZIP üret + Release'i güncelle** (bölüm 5 — Güncelleme)
+Kurulum adımları aşağıda: [🆕 Yeni Windows 11 VDS Kurulumu](#yeni-windows-11-vds-kurulumu).
 
 ---
+
+## 💻 Yerel Kurulum (Windows PC) {#yerel-kurulum}
+
+Yerel kurulum üç dosyayla yapılır. En kolayı hepsini sırayla çalıştıran **`KUR.bat`**.
+
+| Dosya | İşi |
+|---|---|
+| `install.bat` | Python'u (gerekirse kendisi kurar), sanal ortamı, PyTorch'u (GPU ya da CPU), Whisper bileşenlerini ve FFmpeg'i kurar. Kaydı `install_log.txt` dosyasına yazar |
+| `cep_kur.bat` | Paneli `%APPDATA%\Adobe\CEP\extensions\FreeCaption` klasörüne kopyalar, Adobe'nin eklenti iznini (PlayerDebugMode, CSXS 9-14) açar |
+| `start.bat` | Sunucuyu başlatır. Siyah pencere açık kalmalı |
+| `KUR.bat` | Yukarıdaki üçünü sırayla çalıştırır |
+
+### Kurulum nasıl karar verir?
+
+- **Mod:** `install.bat` NVIDIA sürücüsünü kontrol eder (527 ve üstü gerekir), CUDA 12.8 ile gerçek bir GPU işlemi dener. Olmazsa CUDA 12.6, o da olmazsa **CPU modu**. Sonuç `.venv\fc_mode.txt` dosyasına (`gpu` ya da `cpu`) yazılır ve `start.bat` buradan okur.
+- **Model:** GPU modunda `large-v3`. GPU belleği 6 GB'ın altındaysa `start.bat` otomatik `medium` seçer. İstersen `FC_MODEL` ortam değişkeniyle değiştirebilirsin. CPU modunda `medium`.
+- **Python:** 3.10-3.12 (64 bit) aranır: `py` başlatıcı, PATH, bilinen klasörler. Bulunamazsa `winget`, o da olmazsa python.org'dan 3.12.10 kurulur. Microsoft Store'un sahte `python.exe` dosyası atlanır.
+- **Ön kontroller:** zip'in içinden çalıştırma, klasör yolunda Türkçe karakter ya da OneDrive, boş disk (en az 8 GB), internet, açık kalmış sunucu.
+- **Tekrar çalıştırmak güvenli.** `install.bat` yarım kalmış kurulumu onarır ve kaldığı yerden devam eder.
+
+### Sık görülen ekran mesajları
+
+| Ekranda | Çözüm |
+|---|---|
+| `Gerekli dosyalar bulunamadi (backend klasoru yok)` | Zip klasöre çıkarılmamış. Sağ tık, **Tümünü ayıkla**, sonra klasörün içinden çalıştır |
+| `Uygun Python bulunamadi ve otomatik kurulamadi` | Python 3.12 (64 bit) elle kur, **Add python.exe to PATH** kutusunu işaretle |
+| `FreeCaption sunucusu su an ACIK` | Siyah sunucu penceresini kapat, kurulumu tekrar çalıştır |
+| `PyTorch kurulamadi` / `Paket kurulumu basarisiz oldu` | İnternet ya da disk sorunu. Tekrar çalıştır, kaldığı yerden devam eder |
+| `Kurulum bitti ama paketler dogru calismiyor` + `WinError 126` | Microsoft Visual C++ Redistributable (x64) kur, yeniden başlat |
+| `FFmpeg otomatik kurulamadi` | `ffmpeg.exe` ve `ffprobe.exe` dosyalarını `FreeCaption\ffmpeg\bin\` içine koy |
+| `FreeCaption zaten calisiyor (port 7860 dolu)` | Sunucu zaten açık. Panel bağlanmıyorsa bilgisayarı yeniden başlat |
+
+Tam liste, ayrıntılı adımlarla birlikte: [Kurulum Rehberi, Sorun giderme](KURULUM_REHBERI.md).
+
+### Bilinen davranışlar
+
+- **`nvidia.* eklenmedi` satırları** artık gizli (v1.1.2). PyTorch'un CUDA sürümü bu DLL'leri içinde taşıdığı için zararsızdı. Görmek istersen `FC_DEBUG=1` ayarla.
+- **Premiere 2026'da panel görünmüyor:** Adobe, CEP panellerini 25.6'dan beri "eski" sayıyor. Panel **Window > Extensions (Legacy)** altında olabilir.
+- **Panelin "Sunucu Başlat" tuşu** `cep_kur.bat`'ın yazdığı `server_path.txt` içindeki yolu kullanır. FreeCaption klasörünü taşırsan `cep_kur.bat`'ı yeniden çalıştır.
+
+### 🧑‍💻 Betik yazarken kurallar (v1.1.1'den ders)
+
+v1.1.1'de `install.bat` bir `if ( ... )` bloğunun içinde kaçışsız `)` içeriyordu: `("Add Python to PATH" isaretle)`. `cmd.exe` bloğu orada kapattı, arkasındaki `pause` ve `exit /b 1` Python bulunsa bile çalıştı. Kurulum **hiçbir hata yazmadan** "Press any key to continue" ile bitiyordu. Bu yüzden:
+
+1. `.bat` dosyalarında **parantezli `if`/`for` bloğu kullanma.** Etiket (`goto`, `call :etiket`) kullan. Yazı içinde parantez gerekiyorsa `^(` ve `^)` yaz.
+2. `.bat`, `.vbs`, `.ps1` dosyaları **CRLF** olmalı (`.gitattributes` bunu zorlar). LF'li dosyada `cmd` etiketleri yanlış ayrışabilir.
+3. `call :etiket` içinden `goto` ile çıkıp `exit /b` yapma: çağırana geri dönüp akış devam eder. Çıkış kodu döndür, çağıran karar versin.
+4. Betiklerdeki yazılar Türkçe karaktersiz (ASCII) kalır, çünkü konsol kod sayfası bozabilir.
+5. Her değişikliği **boşluk, Türkçe karakter ve parantez içeren bir klasörde** dene, örneğin `C:\Test Klasörü (1)\FreeCaption`.
 
 ---
 
@@ -147,13 +99,14 @@ Lokal makinende:
 ### S1 — Premiere panel açılıyor mu?
 - ✅ Açılıyor → Devam et S2
 - ❌ Açılmıyor → "Window > Extensions > FreeCaption" listede yok
+  - **Önce bak**: Premiere 2026'da paneller **Window > Extensions (Legacy)** altında olabilir.
   - **Çözüm**: Premiere'i tam kapat. `%LOCALAPPDATA%\Temp\cep_cache` klasörünü sil. Premiere'i aç.
   - Hala yok: Plugin'i yeniden yükle → repo klasöründe **`cep_kur.bat`** çift tıkla.
 
 ### S2 — Health badge yeşil mi? ("CPU modu" veya "GPU")
 - ✅ Yeşil → Devam et S3
 - ❌ Kırmızı "Sunucu kapalı" →
-  - **a)** ⚙ butonuna bas → URL'i kontrol et: `http://<SUNUCU_IP>` (eski `191.44.68.233` veya yeni IP)
+  - **a)** ⚙ butonuna bas → URL'i kontrol et: `http://<SUNUCU_IP>` (kendi sunucunun IP adresi)
   - **b)** API Key kontrol et (her iki promp'tan değer girilmiş olmalı)
   - **c)** Tarayıcıdan test: `http://<SUNUCU_IP>/api/health` → JSON dönmeli
   - **d)** Hala yoksa: sunucuya RDP gir → `Restart-Service FreeCaption`
@@ -265,7 +218,7 @@ Lokal makinende Premiere'i aç:
 
 ## 🔄 Eski Sunucudan Yeni VDS'ye Geçiş {#migration}
 
-Mevcut Server'daki `191.44.68.233` durmaya devam etsin, paralel olarak yeni Win 11 VDS kur.
+Mevcut sunucu durmaya devam etsin, paralel olarak yeni Win 11 VDS kur.
 
 ### Geçiş Adımları
 
@@ -289,7 +242,7 @@ Mevcut Server'daki `191.44.68.233` durmaya devam etsin, paralel olarak yeni Win 
 
 ---
 
-## 📦 Plugin/Backend Güncelleme + Yeni Release Yayınlama {#guncelleme}
+## 📦 Güncelleme + Yeni Release Yayınlama {#guncelleme}
 
 ### Senaryo: Bir kod değişikliği yaptın, yeni sürüm yayınlamak istiyorsun
 
@@ -338,18 +291,17 @@ git push origin main
   ```
 - [ ] Commit: `docs: CHANGELOG v1.1.0`
 
-#### Adım 5 — Plugin ZIP Oluştur
+#### Adım 5 — Release ZIP'i oluştur
 
-Repo kökündeki PowerShell:
+Repo kökünde (PowerShell). Betik `.venv`, `.git`, `output`, `ffmpeg`, model ve önbellek klasörlerini zip'e **koymaz**; zip'in içinde üst klasör `FreeCaption\` olur:
 
 ```powershell
-$VERSION = "1.1.0"  # yeni sürüm
-New-Item -ItemType Directory -Force -Path dist | Out-Null
-Compress-Archive -Path cep-plugin\* -DestinationPath "dist\FreeCaption-plugin-v$VERSION.zip" -Force
-Get-Item "dist\FreeCaption-plugin-v$VERSION.zip" | Select-Object Name, @{N='KB';E={[math]::Round($_.Length/1KB,1)}}
+powershell -ExecutionPolicy Bypass -File scripts\make_release_zip.ps1 -Version 1.1.2
 ```
 
-Çıktı `dist/FreeCaption-plugin-v1.1.0.zip` (~55-60 KB).
+Çıktı: `dist\FreeCaption-v1.1.2.zip` (yaklaşık 1,5 MB). Siteye de aynı dosyayı koyabilirsin.
+
+> **Not:** Panelin içindeki **Güncelle** düğmesi release zip'ini kullanmaz. `main` dalının son commit'ini GitHub'dan indirir. Yani `main`'e push ettiğin düzeltme, panelin açılışında kullanıcılara kendiliğinden ulaşır. Release zip'i yeni kurulum yapacaklar içindir.
 
 #### Adım 6 — Git Tag Oluştur
 
@@ -369,8 +321,8 @@ git push origin v1.1.0
 - [ ] https://github.com/ScamEmre/FreeCaption/releases/new aç
 - [ ] **Choose a tag**: `v1.1.0` (yukarıda oluşturduğun)
 - [ ] **Release title**: `v1.1.0 — Konuşmacı Ayırma`
-- [ ] **Description**: CHANGELOG.md'deki ilgili bölümü kopyala/yapıştır
-- [ ] **Attach binaries**: `dist/FreeCaption-plugin-v1.1.0.zip` sürükle bırak
+- [ ] **Description**: CHANGELOG.md'deki ilgili bölümü kopyala/yapıştır (kullanıcı dilinde kısaltarak)
+- [ ] **Attach binaries**: `dist/FreeCaption-v1.1.2.zip` sürükle bırak (yeni sürüm numarasını yaz)
 - [ ] **Set as the latest release** ✓
 - [ ] **Publish release**
 
@@ -422,7 +374,7 @@ Premiere kapat-aç.
 
 ---
 
-## 🛠️ Tipik Sorunlar ve Çözümleri {#tipik-sorunlar}
+## 🧰 Tipik VDS Sorunları {#tipik-sorunlar}
 
 ### 1) winget "msstore certifika hatası"
 
@@ -653,6 +605,6 @@ http://localhost:8088
 
 ## Sürüm Bilgisi
 
-Bu runbook: **v1.0.0** ile uyumlu. Plugin / backend sürümü güncellendiğinde bu doc da revize edilir.
+Bu runbook: **v1.1.2** ile uyumlu (8 Ekim 2026). Kurulum betikleri ya da backend davranışı değiştiğinde bu doküman da güncellenir.
 
 GitHub'da güncel sürüm: [RUNBOOK.md](https://github.com/ScamEmre/FreeCaption/blob/main/RUNBOOK.md)
